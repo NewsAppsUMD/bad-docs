@@ -2,6 +2,7 @@ import csv
 import sqlite_utils
 from pathlib import Path
 from datetime import datetime
+import re
 
 # Path to the original alerts.csv
 csv_file_path = 'alerts.csv'
@@ -23,7 +24,6 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
     fieldnames = reader.fieldnames + ['filename'] if 'filename' not in reader.fieldnames else reader.fieldnames
     # Assume 'date' is the name of the date column to be transformed
     fieldnames = [fn for fn in fieldnames if fn != 'date'] + ['date']  # Ensure 'date' is in the last position for reordering if needed
-    
     for row in reader:
         # Extract filename from URL, change extension to .txt
         filename = row['url'].split('/')[-1].replace('.pdf', '.txt')
@@ -65,6 +65,11 @@ with open(modified_csv_file_path, 'r', encoding='utf-8') as csvfile:
         else:
             # If the file does not exist, set the text to None or an empty string
             row['text'] = None
+        text_file = read_text_file(txt_file_path)
+        license_num = re.search("License Number: (\w+)", text_file)
+        row['license_num'] = str(license_num)
+        case_num = re.search("Case Number: (\w+)-(\w+)", text_file)
+        row['case_num'] = str(case_num)
         # Upsert the row into the SQLite database
         db["alerts"].upsert(row, pk="filename")
 
