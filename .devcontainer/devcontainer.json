@@ -1,0 +1,14 @@
+{
+    "name": "R and Python Project",
+    "dockerFile": "Dockerfile",
+    "settings": { 
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "python.pythonPath": "/usr/bin/python3"
+    },
+    "extensions": [
+        "ikuyadeu.r",
+        "ms-python.python"
+    ],
+    "postCreateCommand": "echo 'Environment setup complete'",
+    "remoteUser": "root"
+}
