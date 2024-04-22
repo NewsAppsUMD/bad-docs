@@ -23,11 +23,15 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
     # Add 'filename' to the fieldnames if it's not already included
     fieldnames = reader.fieldnames + ['filename'] if 'filename' not in reader.fieldnames else reader.fieldnames
     # Assume 'date' is the name of the date column to be transformed
-    fieldnames = [fn for fn in fieldnames if fn != 'date'] + ['date']  # Ensure 'date' is in the last position for reordering if needed
+    fieldnames = [fn for fn in fieldnames if fn != 'date'] + ['date'] + ['doctor_type']  # Ensure 'date' is in the last position for reordering if needed
     for row in reader:
         # Extract filename from URL, change extension to .txt
         filename = row['url'].split('/')[-1].replace('.pdf', '.txt')
         row['filename'] = filename
+        if re.search(r',\s*(.*)', row['name']):
+            row['doctor_type'] = re.search(r',\s*(.*)', row['name']).group(1).strip()
+        else:
+            row['doctor_type'] = None
         # Convert and replace the date format
         if 'date' in row:
             row['date'] = convert_date_format(row['date'])
@@ -62,14 +66,24 @@ with open(modified_csv_file_path, 'r', encoding='utf-8') as csvfile:
         if txt_file_path.exists():
             # Read the content of the .txt file
             row['text'] = read_text_file(txt_file_path)
+            text_file = read_text_file(txt_file_path)
+            if re.search("License Number: (\w+)", text_file):
+                license_num = re.search("License Number: (\w+)", text_file)
+                row['license_num'] = str(license_num.group(0)).replace("License Number:", "").strip()
+            elif re.search("License No.: (\w+)", text_file):
+                license_num = re.search("License No.: (\w+)", text_file)
+                row['license_num'] = str(license_num.group(0)).replace("License No.:", "").strip()
+            if re.search("Case Number: (\w+)", text_file):
+                case_num = re.search("Case Number: (\w+)", text_file)
+                row['case_num'] = str(case_num.group(0) + "-" + case_num.group(1)).replace("Case Number:", "").strip()
+            elif re.search("Case No.: (\w+)", text_file):
+                case_num = re.search("Case No.: (\w+)", text_file)
+                row['case_num'] = str(case_num.group(0) + "-" + case_num.group(1)).replace("Case No:", "").strip()
         else:
             # If the file does not exist, set the text to None or an empty string
             row['text'] = None
-        text_file = read_text_file(txt_file_path)
-        license_num = re.search("License Number: (\w+)", text_file)
-        row['license_num'] = str(license_num)
-        case_num = re.search("Case Number: (\w+)-(\w+)", text_file)
-        row['case_num'] = str(case_num)
+            row['license_num'] = None
+            row['case_num'] = None
         # Upsert the row into the SQLite database
         db["alerts"].upsert(row, pk="filename")
 
