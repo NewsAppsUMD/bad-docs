@@ -11,7 +11,7 @@ csv_file_path = 'clean_nametype.csv'
 # Path to the directory containing the .txt files
 txt_files_directory = Path('combined_text')
 # Path to the SQLite database
-db_path = 'docs-clean.db'
+db_path = 'docs_clean.db'
 
 # Create or open the SQLite database
 db = sqlite_utils.Database(db_path)
@@ -20,7 +20,6 @@ db = sqlite_utils.Database(db_path)
 def read_text_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         return file.read()
-
 
 # Assuming alerts.csv is already modified to include a 'filename' column
 with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
