@@ -22,8 +22,13 @@ def read_text_file(file_path):
         return file.read()
 
 # Assuming alerts.csv is already modified to include a 'filename' column
+rows = []
 with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)
+    # Add 'filename' to the fieldnames if it's not already included
+    fieldnames = reader.fieldnames + ['filename'] if 'filename' not in reader.fieldnames else reader.fieldnames
+    # Assume 'date' is the name of the date column to be transformed
+    fieldnames = [fn for fn in fieldnames if fn != 'date'] + ['date'] + ['text'] + ['license_num'] + ['case_num'] # Ensure 'date' is in the last position for reordering if needed
     for row in reader:
         # Generate the path to the .txt file based on the filename column
         txt_file_path = txt_files_directory / row['filename']
@@ -49,7 +54,21 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
             row['text'] = None
             row['license_num'] = None
             row['case_num'] = None
-        # Upsert the row into the SQLite database
-        db["alerts"].upsert(row, pk="filename")
+        rows.append(row)
+
+with open(csv_file_path, 'w', encoding='utf-8', newline='') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(rows)
+
+# Read the CSV file and insert its data into the SQLite database
+def csv_to_sqlite(csv_file, table_name):
+    with open(csv_file, "r", newline="") as file:
+        reader = csv.DictReader(file)
+        db = sqlite_utils.Database(db_path)
+        db[table_name].insert_all(reader)
+
+# Call the function to convert CSV to SQLite
+csv_to_sqlite(csv_file_path, "alerts")
 
 db["alerts"].enable_fts(["text"], tokenize="porter", replace=True)
