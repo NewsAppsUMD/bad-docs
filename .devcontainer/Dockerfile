@@ -3,6 +3,8 @@
 ARG VARIANT="4.2"
 FROM ghcr.io/rocker-org/devcontainer/tidyverse:${VARIANT}
 
+RUN apt-get update && apt-get upgrade -y
+
 RUN install2.r --error --skipinstalled -n -1 \
         statip \
         patchwork \
