@@ -22,6 +22,3 @@ Start to build the pipeline in ocr.sh by testing out the steps
 - [ ] Run tesseract on the images, saving the output in the text directory
 - [ ] Stitch together the text files from each PDF into a single file
 
-#### 2024-04-24
-
-Khushboo's repository is straight vibin. So far, I have cleaned some of the data up and gotten it ready for actual analysis and being able to use it as a flask site. Next steps include: adding the case number and license number into the updated database, 

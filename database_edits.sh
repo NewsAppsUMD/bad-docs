@@ -1,15 +1,29 @@
 #!/bin/bash
 
-# Path to the SQLite database file
-DB_PATH="bad_docs.db"
+# Database file
+DB_FILE="bad_docs.db"
 
-# SQLite commands to remove the column
-sqlite3 "$DB_PATH" <<EOF
-BEGIN TRANSACTION;
-CREATE TABLE new_alerts AS SELECT column1, column2, ..., columnN FROM alerts; -- Specify all other columns except 'doc_type'
-DROP TABLE alerts;
-ALTER TABLE new_alerts RENAME TO alerts;
-COMMIT;
-EOF
+# SQL command to create a table
+SQL="CREATE TABLE IF NOT EXISTS clean_alerts (
+    row_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id TEXT,
+    url TEXT,
+    clean_name TEXT,
+    first_name TEXT,
+    middle_name TEXT,
+    last_name TEXT,
+    suffix TEXT,
+    doctor_type TEXT,
+    type TEXT,
+    year INTEGER,
+    filename TEXT,
+    date TEXT,
+    text TEXT,
+    license_num TEXT,
+    case_num TEXT
+);"
 
-echo "Column removed successfully."
+# Execute the command
+sqlite3 "$DB_FILE" "$SQL"
+
+echo "Table created successfully."

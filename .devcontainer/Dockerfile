@@ -30,3 +30,5 @@ RUN install2.r --error --skipinstalled -n -1 \
 # Install Python packages
 COPY requirements.txt /tmp/pip-tmp/
 RUN python3 -m pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt
+RUN apt-get update && apt-get install -y sqlite3 libsqlite3-dev && rm -rf /var/lib/apt/lists/*
+
