@@ -85,6 +85,6 @@ with open(modified_csv_file_path, 'r', encoding='utf-8') as csvfile:
             row['license_num'] = None
             row['case_num'] = None
         # Upsert the row into the SQLite database
-        db["alerts"].upsert(row, pk="filename")
+        db["alerts"].upsert(row, pk="filename", replace=True)
 
 db["alerts"].enable_fts(["text"], tokenize="porter", replace=True)

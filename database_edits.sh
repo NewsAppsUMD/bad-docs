@@ -16,7 +16,7 @@ SQL="CREATE TABLE IF NOT EXISTS clean_alerts (
     doctor_type TEXT,
     type TEXT,
     year INTEGER,
-    filename TEXT,
+    filename TEXT PRIMARY KEY,
     date TEXT,
     text TEXT,
     license_num TEXT,
