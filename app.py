@@ -1,6 +1,5 @@
 import os
 from peewee import *
-from census import Census
 from flask import Flask
 from flask import render_template
 app = Flask(__name__)
@@ -12,7 +11,7 @@ class Notice(Model):
     class Meta:
         
 
-class ZipCode(Model):
+class Doctor(Model):
     
 
     class Meta:
@@ -20,13 +19,13 @@ class ZipCode(Model):
 @app.route("/")
 def index():
     notice_count = Notice.select().count()
-    all_zips = ZipCode.select()
+    all_zips = Doctor.select()
     template = 'index.html'
     return render_template(template, count = notice_count, all_zips = all_zips)
 
 @app.route('/doctor/<slug>')
 def detail(slug):
-    zipcode = ZipCode.get(ZipCode.zipcode==slug)
+    zipcode = Doctor.get(Doctor.clean_name==slug)
     notices = Notice.select().where(Notice.zip==slug)
     total_notices = Notice.select(fn.SUM(Notice.notices).alias('sum')).where(Notice.zip==slug).scalar()
     notice_json = []

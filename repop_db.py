@@ -46,6 +46,9 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
             elif re.search("CASE NO.:\s*([\d-]+)", text_file):
                 case_num = re.search("CASE NO.:\s*([\d-]+)", text_file)
                 row['case_num'] = str(case_num.group(1))
+            elif re.search("CASE NO.\s*([\d-]+)", text_file):
+                case_num = re.search("CASE NO.\s*([\d-]+)", text_file)
+                row['case_num'] = str(case_num.group(1))
         else:
             # If the file does not exist, set the text to None or an empty string
             row['text'] = None

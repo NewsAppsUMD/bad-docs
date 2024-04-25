@@ -1,11 +1,12 @@
 #!/bin/bash
 
+sqlite-utils drop-table bad_docs.db clean_alerts
+
 # Database file
 DB_FILE="bad_docs.db"
 
 # SQL command to create a table
 SQL="CREATE TABLE IF NOT EXISTS clean_alerts (
-    row_id INTEGER PRIMARY KEY AUTOINCREMENT,
     id TEXT,
     url TEXT,
     clean_name TEXT,
@@ -27,3 +28,14 @@ SQL="CREATE TABLE IF NOT EXISTS clean_alerts (
 sqlite3 "$DB_FILE" "$SQL"
 
 echo "Table created successfully."
+
+python3 repop_db.py
+
+echo "Table populated successfully."
+
+sqlite-utils extract bad_docs.db clean_alerts text id --table text
+sqlite-utils transform bad_docs.db text --rename id text_id
+
+
+
+
