@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/"> In Violation: Disciplinary Alerts for Maryland Doctors </a>
+    </nav>
+      <div class="jumbotron">
+        <div class="container">
+            <h1>Maryland Notices of Foreclosure by Zip Code</h1>
+            <p>There are {{ count }} records in the database.</p>
+            <h3>Zip Codes</h3>
+            <div class="row">
+                <div class="col-md-4">
+                <ul class="list-unstyled">
+                    {% for zip in all_zips %}
+                        <li><a href="/zipcode/{{ zip.zipcode }}">{{ zip.zipcode }}</a></li>
+                        {% if loop.index % 3 == 0 and not loop.last %}
+                        </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <ul class="list-unstyled">
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

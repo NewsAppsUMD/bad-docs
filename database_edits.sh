@@ -1,6 +1,9 @@
 #!/bin/bash
 
+#python3 mod_alerts.py
+
 sqlite-utils drop-table bad_docs.db clean_alerts
+sqlite-utils drop-table bad_docs.db text
 
 # Database file
 DB_FILE="bad_docs.db"

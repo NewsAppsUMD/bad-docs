@@ -46,6 +46,13 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
             elif re.search("CASE NO.:\s*([\d-]+)", text_file):
                 case_num = re.search("CASE NO.:\s*([\d-]+)", text_file)
                 row['case_num'] = str(case_num.group(1))
+            elif re.search("CASE NUMBERS:\b(\d{4}-\d{4}[A-Z])\b", text_file):
+                pattern = r'CASE NUMBERS:\b(\d{4}-\d{4}[A-Z])\b'
+                # Find all matches
+                matches = re.findall(pattern, text_file)
+                # Join the matches with a comma
+                result = ', '.join(matches)
+                row['case_num'] = result
             elif re.search("CASE NO.\s*([\d-]+)", text_file):
                 case_num = re.search("CASE NO.\s*([\d-]+)", text_file)
                 row['case_num'] = str(case_num.group(1))
