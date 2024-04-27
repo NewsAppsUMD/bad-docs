@@ -31,15 +31,11 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
             # Read the content of the .txt file
             row['text'] = read_text_file(txt_file_path)
             text_file = read_text_file(txt_file_path).upper()
-            if re.search("LICENSE NUMBER: (\w+)", text_file):
-                license_num = re.search("LICENSE NUMBER: (\w+)", text_file)
-                row['license_num'] = str(license_num.group(0)).replace("LICENSE NUMBER:", "").strip()
-            elif re.search("LICENSE NO.: (\w+)", text_file):
-                license_num = re.search("LICENSE NO.: (\w+)", text_file)
-                row['license_num'] = str(license_num.group(0)).replace("LICENSE NO.:", "").strip()
-            elif re.search("LICENSE NUMBER (\w+)", text_file):
-                license_num = re.search("LICENSE NUMBER (\w+)", text_file)
-                row['license_num'] = str(license_num.group(0)).replace("LICENSE NUMBER", "").strip()
+            if row['doctor_type'] == "Unlicensed":
+                row['license_num'] = "Unlicensed"
+            else:
+                result = re.search(r'^([^.]*)\.', row['filename'])
+                row['license_num'] = result.group(1)
             if re.search(r'CASE NUMBER:\s*([\d-]+)', text_file):
                 case_num = re.search("CASE NUMBER:\s*([\d-]+)", text_file)
                 row['case_num'] = str(case_num.group(1))
