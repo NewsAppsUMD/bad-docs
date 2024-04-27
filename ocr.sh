@@ -21,8 +21,5 @@ for image_file in "$images_directory"/*.png; do
         # The text file doesn't exist, so run Tesseract OCR on the image
         echo "Processing: $filename"
         tesseract "$image_file" "$output_base"
-    else
-        # The text file exists, skip OCR for this image
-        echo "Already processed: $filename, skipping."
     fi
 done

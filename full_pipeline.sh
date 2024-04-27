@@ -1,4 +1,11 @@
 #!/bin/bash
+sudo apt-get update
+sudo apt-get install poppler-utils
+pip install csvkit
+pip install datasette
+pip install sqlite-utils
+datasette install datasette-codespaces
+pip install pdf2image
 
 
 python3 scrape.py

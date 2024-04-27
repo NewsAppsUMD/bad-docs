@@ -4,11 +4,6 @@ from flask import Flask
 from flask import render_template
 app = Flask(__name__)
 db = SqliteDatabase('bad_docs.db')
-
-class Notice(Model):
-    
-
-    class Meta:
         
 
 class Doctor(Model):
