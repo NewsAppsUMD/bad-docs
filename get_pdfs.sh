@@ -11,7 +11,6 @@ csvcut -c url "$csv_file" | tail -n +2 | while IFS= read -r url; do
     filename=$(basename "$url")
     if [ ! -f "pdfs/$filename" ]; then
         wget -P pdfs "$url"
-    else
-        echo "File $filename already exists. Skipping download."
+        echo "$filename downloaded successfully"
     fi
 done

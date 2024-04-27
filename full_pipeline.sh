@@ -1,5 +1,12 @@
 #!/bin/bash
-
+pip install csvkit
+pip install pdf2image-cli
+sudo apt install tesseract-ocr
+sudo apt install libtesseract-dev
+pip install datasette
+pip install sqlite-utils
+datasette install datasette-codespaces
+sudo apt-get install poppler-utils
 
 python3 scrape.py
 Rscript license_mutations.R
