@@ -1,6 +1,14 @@
 #!/bin/bash
 
-#python3 mod_alerts.py
+
+python3 scrape.py
+Rscript license_mutations.R
+bash get_pdfs.sh
+bash images.sh
+bash ocr.sh
+bash combine_text.sh
+python3 mod_alerts.py
+Rscript data_cleaning.R
 
 sqlite-utils drop-table bad_docs.db clean_alerts
 sqlite-utils drop-table bad_docs.db text
