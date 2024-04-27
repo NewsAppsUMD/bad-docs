@@ -4,6 +4,8 @@ ARG VARIANT="4.2"
 FROM ghcr.io/rocker-org/devcontainer/tidyverse:${VARIANT}
 
 RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y poppler-utils && apt-get install -y tesseract-ocr
+RUN apt-get install -y libtesseract-dev
 
 RUN install2.r --error --skipinstalled -n -1 \
         statip \
