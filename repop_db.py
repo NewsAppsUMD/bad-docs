@@ -31,27 +31,26 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
             # Read the content of the .txt file
             row['text'] = read_text_file(txt_file_path)
             text_file = read_text_file(txt_file_path).upper()
-            if re.search(r'CASE NUMBER:\s*([\d-]+)', text_file):
-                case_num = re.search("CASE NUMBER:\s*([\d-]+)", text_file)
-                row['case_num'] = str(case_num.group(1))
-            elif re.search("CASE NO.:\s*([\d-]+)", text_file):
-                case_num = re.search("CASE NO.:\s*([\d-]+)", text_file)
-                row['case_num'] = str(case_num.group(1))
-            elif re.search("CASE NUMBERS:\b(\d{4}-\d{4}[A-Z])\b", text_file):
-                pattern = r'CASE NUMBERS:\b(\d{4}-\d{4}[A-Z])\b'
-                # Find all matches
-                matches = re.findall(pattern, text_file)
-                # Join the matches with a comma
-                result = ', '.join(matches)
-                row['case_num'] = result
-            elif re.search("CASE NO.\s*([\d-]+)", text_file):
-                case_num = re.search("CASE NO.\s*([\d-]+)", text_file)
-                row['case_num'] = str(case_num.group(1))
+            if re.search(r'CASE N', text_file):
+                pattern = r'\b\d{4}-\d{4} ?[A-Z]?\b'
+                alt_patt = r'\b\d{4}-\d{5} ?[A-Z]?\b'
+                if re.search(pattern, text_file):
+                    matches = re.findall(pattern, text_file)
+                    result = ','.join(list(set(matches)))
+                    row['case_num'] = result.replace(" ", "")
+                elif re.search(alt_patt, text_file):
+                    matches = re.findall(alt_patt, text_file)
+                    result = ','.join(list(set(matches)))
+                    row['case_num'] = result.replace(" ", "").replace(",", ", ")
+                else:
+                    row['case_num'] = "No Case Listed"
+            else:
+                row['case_num'] = "No Case Listed"
         else:
             # If the file does not exist, set the text to None or an empty string
-            row['text'] = None
-            row['license_num'] = None
-            row['case_num'] = None
+            row['text'] = "Document Not Found"
+            row['license_num'] = "Document Not Found"
+            row['case_num'] = "Document Not Found"
         # Upsert the row into the SQLite database
         db["clean_alerts"].insert(row, pk="filename", replace=True)
 
