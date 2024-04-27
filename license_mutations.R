@@ -1,7 +1,7 @@
 # Install Libraries
+install.packages("tidyverse")
 
 library(tidyverse)
-library(dplyr)
 
 # Clean up Alerts data
 alert_original <- read_csv("alerts.csv")
