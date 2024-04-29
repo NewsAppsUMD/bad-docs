@@ -2,6 +2,7 @@
 
 sqlite-utils drop-table bad_docs.db clean_alerts
 sqlite-utils drop-table bad_docs.db text
+sqlite-utils drop-table bad_docs.db doctor_info
 
 # Database file
 DB_FILE="bad_docs.db"
@@ -35,4 +36,5 @@ python3 repop_db.py
 echo "Table populated successfully."
 
 sqlite-utils extract bad_docs.db clean_alerts text id --table text
+sqlite-utils extract bad_docs.db clean_alerts clean_name doctor_type license_num --table doctor_info
 sqlite-utils transform bad_docs.db text --rename id text_id

@@ -10,13 +10,13 @@
       <div class="jumbotron">
         <div class="container">
             <h1>Maryland Notices of Foreclosure by Zip Code</h1>
-            <p>There are {{ count }} records in the database.</p>
-            <h3>Zip Codes</h3>
+            <p>There are {{ count }} doctors in the database.</p>
+            <h3>Doctors</h3>
             <div class="row">
                 <div class="col-md-4">
                 <ul class="list-unstyled">
-                    {% for zip in all_zips %}
-                        <li><a href="/zipcode/{{ zip.zipcode }}">{{ zip.zipcode }}</a></li>
+                    {% for doc in all_docs %}
+                        <li><a href="/doctor/{{ doc.clean_name }}">{{ doc.clean_name }}</a></li>
                         {% if loop.index % 3 == 0 and not loop.last %}
                         </ul>
                             </div>
