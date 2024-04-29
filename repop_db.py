@@ -28,6 +28,7 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
         txt_file_path = txt_files_directory / row['filename']
         # Check if the .txt file exists
         if txt_file_path.exists():
+            case_dict = {}
             # Read the content of the .txt file
             row['text'] = read_text_file(txt_file_path)
             text_file = read_text_file(txt_file_path).upper()
@@ -36,22 +37,25 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
                 alt_patt = r'\b\d{4}-\d{5} ?[A-Z]?\b'
                 if re.search(pattern, text_file):
                     matches = re.findall(pattern, text_file)
-                    result = ','.join(list(set(matches)))
-                    row['case_num'] = result.replace(" ", "")
+                    result = list(set(matches))
                 elif re.search(alt_patt, text_file):
-                    matches = re.findall(alt_patt, text_file)
-                    result = ','.join(list(set(matches)))
-                    row['case_num'] = result.replace(" ", "").replace(",", ", ")
+                    result = list(set(matches))
                 else:
-                    row['case_num'] = "No Case Listed"
+                    result = ["None"]
             else:
-                row['case_num'] = "No Case Listed"
+                result = ["None"]
+            for case in result:
+                case = case.replace(" ", "")
+            result = list(set(result))
+            for case in result:
+                case_dict['case_num'] = case
+                case_dict['filename'] = row['filename']
+                db["all_cases"].insert(case_dict, pk="id", replace=True)
         else:
             # If the file does not exist, set the text to None or an empty string
             row['text'] = "Document Not Found"
             row['license_num'] = "Document Not Found"
-            row['case_num'] = "Document Not Found"
         # Upsert the row into the SQLite database
-        db["clean_alerts"].insert(row, pk="filename", replace=True)
+        db["clean_alerts"].insert(row, pk="id", replace=True)
 
 db["clean_alerts"].enable_fts(["text"], tokenize="porter", replace=True)

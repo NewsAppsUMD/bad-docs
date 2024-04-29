@@ -12,28 +12,22 @@
   <!-- Bootstrap CSS and JavaScript -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;1,400&display=swap"
     rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <!-- Stylesheet Linkage -->
-  <link rel="stylesheet" href="style.css" type="text/css">
+  <link rel="stylesheet" href="../static/style.css">
 
 </head>
 
 <body>
-  <div id="container">
+  <div id="container" data-bs-theme="dark">
     <!--Navbar Starts-->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
       <div class="container-fluid">
-        <a class="bar navbar-brand" href="#"> <img id="logo" src="new-pride-flag-01.jpg" alt="A pride flag"> </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
@@ -54,428 +48,31 @@
     <div id="content">
 
       <!--Headliner and other Header things-->
-      <section class="bgimage">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-12">
-              <div id="headline">
-                {{ doctor.clean_name }}, {{ doctor.doctor_type }}
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-12">
-              <div id="dek">
-                License Number: {{ doctor.license_num }}
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-12">
-              <div id="credit">
-                Photograph by Jay Janner / Austin American-Statesman / USA Today Network / Reuters
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!--Headliner and other Header things ends-->
-      <div id="story">
-        <div id="byline">
-          Caitlin Gibson <br> <i>The Washington Post</i>
-        </div>
-        <div id="date">
-          March 17, 2022
-        </div>
-        <!--Story text begins-->
-        <p>
-          <em class="firstlet">T</em>he sticky note left on Amber Briggle’s desk was scrawled with a name, a phone
-          number and the words urgent
-          and private.
-        </p>
-
-        <p>
-          When Briggle, a mother of two and a small-business owner in Texas, arrived at her office on Feb. 28, she
-          felt sure she knew what the note meant: Another parent of a transgender child — perhaps one who was under
-          investigation by the state’s protective services agency — was calling for guidance; Briggle has long been a
-          prominent advocate for the rights of transgender children and their families. Briggle dialed the number,
-          prepared to hear about a family in trouble. Then an investigator from Child Protective Services (CPS)
-          answered, and she realized the family in trouble was her own.
-        </p>
-
-        <p>
-          What followed, Briggle said, was a sickening, surreal blur: She ran down the hallway, collapsed in the
-          arms of a co-worker, and tried to explain through sobs: It’s happening. CPS has opened an investigation on
-          my family. I’m so scared they’re going to take my kids away. She sank to the floor and felt like she was
-          still falling. The investigator was already on the way to see her, and Briggle had half an hour to summon
-          her husband to her office, to hire an attorney, and to prepare for the moment she had dreaded for years.
-        </p>
-
-        <p>
-          She had been braced for this possibility in the aftermath of a Feb. 22 directive written by Texas Gov.
-          Greg Abbott (R), instructing the state’s Department of Family and Protective Services (DFPS) to investigate
-          families who provide gender-affirming care to their transgender children, describing such care as “abuse”
-          that should be referred for criminal prosecution. Abbott’s letter to the state agency followed a Feb. 18
-          opinion by Texas Attorney General Ken Paxton (R) asserting that gender-affirming treatments for transgender
-          children — including puberty-blocking medications and gender-reassignment surgery — “can legally constitute
-          child abuse.”
-        </p>
-
-        <figure>
-          <img class="photog" src="texas-gov.jpeg" alt="Texas Governor Greg Abbott">
-          <figcaption> Texas Gov. Greg Abbott speaks at a news conference in Austin, Texas on June 8, 2021. Abbott,
-            has ordered the state's child welfare agency to investigate reports of gender-confirming care for kids as
-            "child abuse" in a directive that opponents say is a first by any governor over GOP efforts to restrict
-            transgender rights. (AP Photo/Eric Gay, File) </figcaption>
-        </figure>
-
-        <p>
-          There is no existing law in Texas, or any other state, that categorizes gender-affirming care as abuse. In
-          the wake of Abbott’s directive, some county attorneys said they would not enforce it, and legal and
-          transgender policy experts emphasized that neither the letter nor Paxton’s opinion were legally binding. Yet
-          within days of Abbott’s letter, Texas officials began opening investigations of families suspected of
-          providing gender-affirming care to their children — and these investigations have been conducted outside the
-          typical protocol for child abuse cases, according to attorneys who represent the families and the testimony
-          of a Child Protective Services investigations supervisor. As of March 11, officials confirmed that nine such
-          cases had been opened.
-        </p>
-
-        <p>
-          Since then, Texas’s authority to launch these investigations has only grown murkier. On March 11, a judge
-          in Austin issued a temporary injunction against Abbott’s order, calling it an unconstitutional overreach and
-          a violation of the democratic process. The injunction blocked investigations and prosecutions of families
-          accused of child abuse solely on the basis of providing gender-affirming care, at least until a trial in the
-          case could take place in July. But within hours, Paxton tweeted that his office had filed an appeal — and
-          claimed that the judge’s injunction was thereby “frozen,” and investigations would continue. Legal experts
-          and state officials have said it’s unclear how the DFPS plans to proceed. Attorneys representing clients
-          under investigation have said they have not yet been told whether the cases will continue or be closed, and
-          so the uncertainty has intensified for parents who are still waiting to hear what will happen to their
-          families.
-        </p>
-
-        <br>
-
-        <iframe title="Estimated transgender population by percentage, ages 13-17" aria-label="Map"
-          id="datawrapper-chart-ti2jY" src="https://datawrapper.dwcdn.net/ti2jY/3/" scrolling="no" frameborder="0"
-          style="width: 0; min-width: 100% !important; border: none;" height="615"> </iframe>
-        <script
-          type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (e) { if (void 0 !== e.data["datawrapper-height"]) { var t = document.querySelectorAll("iframe"); for (var a in e.data["datawrapper-height"]) for (var r = 0; r < t.length; r++) { if (t[r].contentWindow === e.source) t[r].style.height = e.data["datawrapper-height"][a] + "px" } } })) }(); </script>
-
-        <div class="sechead"> 'Borrowed Time' </div>
-
-        <p>
-          <em class="firstlet">H</em>ours after their first meeting with the CPS investigator, Amber Briggle and her
-          husband, Adam Briggle, sat
-          down with their children — their son, who is transgender, is 14; their daughter is 9 — to explain what was
-          about to happen.
-        </p>
-
-        <p>
-          “They were very confused. I’d ask if they were okay and they’d nod, but their eyes were dark. I could tell
-          they weren’t okay,” Amber Briggle said. “We explained, and we could see they were anxious. I’d say: ‘Are you
-          worried?’ And they’d say quietly, ‘Yeah.’ ”
-        </p>
-
-        <p>
-          The family rushed to hire an attorney to represent the children, so they would have an adult advocate present
-          during their conversation with the CPS investigator. The Briggles contacted a social worker, who immediately
-          conducted a home study to bolster the family’s “safe folder” — a collection of legal documents, letters,
-          drawings, photographs and other materials that confirm a child’s gender identity and the parents’ capacity to
-          care for them.
-        </p>
-
+      <div class="container-fluid">
         <div class="row">
-          <div class="col-md-6">
-            <p>
-              Years ago, the Briggles had hoped that it would never come to this. In 2016, they invited Paxton and his
-              wife to their home for dinner; they wanted the attorney general to meet their then-8-year-old transgender
-              son and to see firsthand that their family was a loving and healthy one. They hoped spending that time
-              together might prompt Paxton to rethink the lawsuit he had recently filed, seeking to prohibit transgender
-              children
-              from using bathrooms that corresponded to their gender identity. The Paxtons arrived at the Briggles’
-              doorstep
-              with a freshly baked dessert, still warm from the oven.
-            </p>
-          </div>
-          <div class="col-md-6">
-            <figure>
-              <img id="sidepho" src="transsigns.jpg" alt="People holding signs standing up for transgender rights">
-              <figcaption> ‘Trans people are saying they are frightened and in pain because people are questioning their
-                rights, and we’re not listening.’ A protest in Parliament Square against potential changes to the Gender
-                Recognition Act. Photograph: Wiktor Szymanowicz/Rex/Shutterstock </figcaption>
-            </figure>
+          <div class="col-lg-12">
+            <div id="headline">
+              {{ doctor.clean_name }}, {{ doctor.doctor_type }}
+            </div>
           </div>
         </div>
-
-        <p>
-          “They were lovely dinner guests,” Amber Briggle recalled. “They were very kind, they were very polite, they
-          gave us their undivided attention. No one ever checked a cellphone or stepped away for a call. They never
-          misgendered my son.” She exhaled. “Adam and I really thought, ‘We did it! We fixed it! We changed his mind!’ ”
-        </p>
-
-        <p>
-          A spokesperson for Paxton did not immediately respond to a request for comment.
-        </p>
-
-        <p>
-          The Briggles and other trans-inclusive Texas families have spent years fighting for the freedom and safety of
-          their children. A historic wave of anti-trans legislation was introduced to the Texas legislature in 2021,
-          with dozens of bills that aimed to strip rights from transgender children and their families — including by
-          prohibiting medical treatment for transgender children and banning transgender children from playing on sports
-          teams that align with their gender identity. The Briggles have no way to know who filed the complaint against
-          their family — but as vocal advocates who have testified before the legislature and appeared in the media
-          before, they say their activism has made them a highly visible target.
-        </p>
-
-        <figure>
-          <img class="photog" src="transparent.jpg" alt="People holding signs standing up for transgender rights">
-          <figcaption> Atlas, left, and Sam, right, chant in front of the Texas Capitol during a protest for transgender
-            kids' rights on Tuesday, March 1, 2022. Sam said he came "so kids like me don't have to go through the hard
-            strifes of CPS or health care procedures to feel like themselves." Credit: Lauren Witte/The Texas Tribune
-          </figcaption>
-        </figure>
-
-        <p>
-          On March 2, the CPS investigator came to their home. “Adam let her in,” Amber Briggle said. “I was really
-          concerned that I was just going to break down in front of my kids. I prayed in the bathroom, and then I came
-          out and put on a brave face.”
-        </p>
-
-        <p>
-          They showed the investigator the pantry full of food, the bathrooms fully stocked with toiletries, the family
-          room brimming with toys and books and art projects. They answered some of her questions, and declined to
-          answer others. They did not let her step beyond the doorway of their children’s rooms. “It was such a
-          violation to have her in my space at all,” Briggle said, “and I did not want her violating the rooms of my
-          children.”
-        </p>
-        <p>
-          As the investigator was leaving their home, she glanced over at their son, who had started practicing his
-          cello. “She said, ‘Clearly you’re doing something right,’ ” Briggle said. “And she left.”
-        </p>
-        <p>
-          Since then, they’ve remained in a state of unsettled suspension. There has been no word about their case since
-          the injunction, which they thought would give them a momentary break, Briggle said, “a chance to catch our
-          breath.”
-        </p>
-        <p>
-          “But there is no relief,” added Adam Briggle. “It’s just a pause. It’s borrowed time.”
-        </p>
-
-        <br>
-
-        <iframe title="Suicide risk percentages by gender identity in students" aria-label="Split Bars"
-          id="datawrapper-chart-AkmHX" src="https://datawrapper.dwcdn.net/AkmHX/2/" scrolling="no" frameborder="0"
-          style="width: 0; min-width: 100% !important; border: none;" height="346"></iframe>
-        <script
-          type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (e) { if (void 0 !== e.data["datawrapper-height"]) { var t = document.querySelectorAll("iframe"); for (var a in e.data["datawrapper-height"]) for (var r = 0; r < t.length; r++) { if (t[r].contentWindow === e.source) t[r].style.height = e.data["datawrapper-height"][a] + "px" } } })) }();</script>
-
-        <div class="sechead"> 'Extremely unusual' procedures </div>
-
-        <p>
-          <em class="firstlet">A</em>dding to the stress faced by families under investigation is the fact that their
-          cases have not been
-          conducted normally, according to attorneys who represent the families and the testimony of a Child Protective
-          Services investigations supervisor at the March 11 hearing in Austin.
-        </p>
-
-        <p>
-          In a typical child abuse investigation, explained Ian Pittman, the Briggle family’s attorney, a field
-          investigator in a local CPS office conducts the inquiry and then works with their direct supervisor to reach a
-          disposition, or conclusion in the case: Either they rule out abuse, are unable to determine whether abuse
-          occurred, or find reason to believe that abuse occurred. They also have discretion to decide not to
-          investigate if they determine a complaint is not credible. But in the Briggle family’s case, he said, the
-          investigator who came to their home was herself a supervisor, and she told Pittman that she would be
-          coordinating with officials at the regional level. “That’s extremely unusual,” he said. “Normally there is
-          more autonomy. This is not how the CPS handbook says investigations are supposed to be conducted.”
-        </p>
-        <figure>
-          <img class="photog" src="youth.jpg" alt="People holding signs standing up for transgender rights">
-          <figcaption> Demonstrators protest a Texas policy to regard gender-affirming treatments for transgender youth
-            as "child abuse," at the State Capitol on Mar. 1, 2022. Christopher Lee / NYT via Redux
-          </figcaption>
-        </figure>
-        <p>
-          CPS’s methods also came under scrutiny at the March 11 injunction hearing. Lawyers from the ACLU and Lambda
-          Legal, which had asked for the injunction on behalf of a family of a transgender child and a psychologist who
-          works with transgender children, called a CPS investigations supervisor named Randa Mulanax. Mulanax testified
-          that she and other managers were summoned to a virtual meeting two days after Abbott issued his directive and
-          were told not to document anything about the investigations in emails or text messages. The staff was also
-          told that they no longer had discretion to designate cases involving trans children as “priority none” —
-          meaning unnecessary to investigate — nor could they opt to use less intrusive procedures to carry out the
-          investigations, she said.
-        </p>
-        <p>
-          The only other cases handled in such a way, she testified, were those involving a conservatorship or the death
-          of a child. Mulanax said she had submitted her resignation because she objected to Abbott’s order.
-        </p>
-        <p>
-          Following that hearing, Pittman said he emailed a copy of the injunction to the investigator for the Briggles’
-          case and said the family would no longer be participating in the process. But as of Wednesday, he said it
-          still wasn’t clear whether investigators had been directed to halt their work, in accordance with the judge’s
-          order, or whether they intended to proceed, as Paxton had claimed they would.
-        </p>
         <div class="row">
-          <div class="col-md-6">
-            <p>
-              Tracy L. Harting, an attorney in Austin who represents two families who are under investigation, said she
-              had similar trouble getting a clear answer on the status of her clients’ cases.
-            </p>
-            <p>
-              “One investigator has called me back and let me know that he has no idea what’s going on, that he was
-              waiting on further direction,” she said. “We have no idea what’s going to happen.”
-            </p>
-            <p>
-              Asked how the agency plans to proceed, a spokesperson for DFPS said in an emailed statement: “The best way
-              to describe our
-            </p>
-          </div>
-          <div class="col-md-6">
-            <blockquote>
-              "Then she said they could investigate me retroactively, even if my son was 18 years old.” <br> - L.
-            </blockquote>
+          <div class="col-lg-12">
+            <div id="dek">
+              License Number: {{ doctor.license_num }}
+            </div>
           </div>
         </div>
-        <p>
-          posture on these investigations is that we are continuing to follow the law.” The spokesperson declined to
-          offer any further clarification.
-        </p>
-        <p>
-          One mother in Austin, a social worker — who agreed to speak only if she could be identified by her first
-          initial L. to protect her and her child’s identity — is among those caught in this legal limbo. She learned
-          that she was being investigated for child abuse when an investigator arrived at her home on March 1. As they
-          spoke, L. said the investigator repeatedly misgendered L.’s son — referring to him as “your daughter” despite
-          L.’s corrections — and, at first, disputed L.’s assertion that her son was 18 years old.
-        </p>
-        <p>
-          “Then she said they could investigate me retroactively, even if my son was 18 years old,” L. said. “She said,
-          ‘If we go inside, I can talk to your daughter and we can get this taken care of,’ and I said, ‘He doesn’t live
-          here, and you can’t come in.’ … She finally gave me her card, and I just stepped back into my house and
-          slammed my door in her face.”
-        </p>
-        <p>
-          Like Briggle, L. believes the complaint against her originated with her and her son’s activism — they
-          testified repeatedly before the state legislature in 2019 and 2021.
-        </p>
-
-        <figure>
-          <img class="photog" src="txlege.jpeg" alt="People holding signs standing up for transgender rights">
-          <figcaption>
-            Protestors participate in a rally against anti-trans legislation on the southern steps of the state Capitol
-            on April 28, 2021. Evan L'Roy/The Texas Tribune
-          </figcaption>
-        </figure>
-
-        <p>
-          “When we finally got the list of accusations, most of it was direct quotes from my testimony at the [Texas]
-          Capitol … about the gender-affirming care that my son was provided,” she said. “And then there are also a
-          couple of bogus reports of physical abuse — witnesses said I hit him at the Capitol and in the Capitol parking
-          lot. Which is just ridiculous.”
-        </p>
-        <p>
-          Because her son is a legal adult who attends college in the Midwest, L. said, “I’m not worried about them
-          taking my child away, like they could do to other families. What I’m worried about is my career.” As a social
-          worker, she explained, she would lose her job if she is charged with child abuse.
-        </p>
-        <p>
-          The investigator later showed up at a co-worker’s home, she said, and at her workplace.
-        </p>
-        <p>
-          When the injunction was issued, L. was relieved, she said — she hoped she would soon receive a case-closure
-          letter. But as of Wednesday, she said her attorney was still waiting for a clear answer from CPS about what to
-          expect: “My understanding is that, as of now, my case is still open,” L. said.
-        </p>
-        <p>
-          The whiplash of these latest developments, she said, is exhausting.
-        </p>
-        <p>
-          “We have spent so much time fighting for my son’s humanity,” she said. “If you met him, and you didn’t know he
-          was trans, you’d think he’s a typical 18-year-old boy. He’s a great kid. He really wants to change the world
-          and do good. He’s studying to become a pediatric oncology nurse. These people hate him for one adjective that
-          describes him, when there are so many others — funny, shy, caring, kind — that are so much more important.”
-        </p>
-
-        <figure>
-          <img class="photog" src="love.jpeg" alt="A photo of a mother and son">
-          <figcaption>
-            Amber Briggle and her son Max in 2021. Jillian R. McKenzie
-          </figcaption>
-        </figure>
-
-        <div class="sechead"> 'A heaviness' </div>
-
-        <p>
-          <em class="firstlet">I</em>n the brief window of borrowed time, the interlude between emergencies, these
-          families are left to face the cumulative toll of being targeted. Amber Briggle wants her family to see a
-          therapist together, to begin to process what they’ve been through — what they’re still going through — but
-          even finding the energy to research the right therapist feels overwhelming.
-        </p>
-        <p>
-          Meanwhile, she said, her hair has been falling out, and she often has to remind herself to eat. She and Adam
-          aren’t sleeping well, and they suffer from frequent headaches. L. describes similar symptoms of stress, and
-          said she’s lost 10 pounds since the CPS investigator came to her door.
-        </p>
-        <p>
-          At first, L. said, her son believed he could resolve the problem himself. “He said, ‘I’ll call, I’ll tell them
-          it’s not true, and it’ll be done,’ but I told him I’d handle it as much as I can,” she said. “He needs to
-          concentrate on midterms, on school.”
-        </p>
-        <p>
-          Amber and Adam Briggle try not to talk about what’s happening in front of their children.
-        </p>
-        <p>
-          “We don’t want to worry them. We want this to be our fight, not theirs,” she said. “But kids are really
-          intuitive, they pick up on a lot. And there is definitely a fog, a shadow — just a heaviness that’s settled
-          over our house.”
-        </p>
-
-        <iframe title="Victimization of students based on gender identity (%)" aria-label="Grouped Bars"
-          id="datawrapper-chart-VAe6n" src="https://datawrapper.dwcdn.net/VAe6n/2/" scrolling="no" frameborder="0"
-          style="width: 0; min-width: 100% !important; border: none;" height="946"></iframe>
-        <script type="text/javascript">!function () { "use strict"; window.addEventListener("message", (function (e) { if (void 0 !== e.data["datawrapper-height"]) { var t = document.querySelectorAll("iframe"); for (var a in e.data["datawrapper-height"]) for (var r = 0; r < t.length; r++) { if (t[r].contentWindow === e.source) t[r].style.height = e.data["datawrapper-height"][a] + "px" } } })) }();
-        </script>
-
-        <p>
-          Still, they have no plans to leave Texas. Adam Briggle said he doesn’t believe his family, or any other
-          family, should have to flee their home in order to secure their civil rights. “We both have jobs,” he said. “I
-          would lose my health insurance. How would we provide for the kids? How would they cope with the loss of their
-          friends?”
-        </p>
-        <p>
-          So they will stay and defend themselves and other families like theirs, he said, even knowing there is no
-          certain end in sight.
-        </p>
-        <p>
-          “Even if we beat this round of attacks, we know they are coming for us again in the next legislative session,
-          in 2023,” he said. “I measure my life in those terms now: Beat this first. Then armor up for the next fight.
-          How is this happening in our country?”
-        </p>
-        <div class="sechead" style="text-align: center; font-size: 40px;"> Read More </div>
-        <div class="row" id="readmore">
-          <div class="col-md-4">
-            <div class="px-4 py-5 my-5 text-center">
-              <a href="https://www.washingtonpost.com/nation/2022/05/23/oklahoma-bathroom-bill-passed-legislature/"> <p class="headers"> Oklahoma just passed its third anti-trans bill of the year </p> </a>
-              <img class="photog" src="story1.jpg" alt="a story image">
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="px-4 py-5 my-5 text-center">
-              <a href="https://www.washingtonpost.com/politics/2022/03/25/lgbtq-rights-gop-bills-dont-say-gay/">
-                <p class="headers"> GOP lawmakers push historic wave of bills targeting rights of LGBTQ teens, children
-                  and their families </p>
-              </a>
-              <img class="photog" src="story2.jpg" alt="a story image">
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="px-4 py-5 my-5 text-center">
-              <a href="https://www.washingtonpost.com/dc-md-va/2022/05/21/pride-gavin-grimm-montgomery-county/">
-                <p class="headers"> Trans activist urges Md. high-schoolers to demand what they deserve </p>
-              </a>
-              <img class="photog" src="story3.jpg" alt="a story image">
+        <div class="row">
+          <div class="col-lg-12">
+            <div id="credit">
+              Case Numbers:
+              {% for doc in all_docs %}
             </div>
           </div>
         </div>
       </div>
+      <!--Headliner and other Header things ends-->
     </div>
   </div>
 </body>

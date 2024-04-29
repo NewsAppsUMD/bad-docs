@@ -44,8 +44,13 @@ def index():
 def detail(slug):
     doctor = Doctor.get(Doctor.clean_name==slug)
     doctor_id = doctor.id
-    notices = Alert.select().where(Alert.doctor_info_id==id)
-    return render_template("doctor.html", doctor = doctor)
+    alerts = Alert.select().where(Alert.doctor_info_id==id)
+    cases = []
+    for alert in alerts:
+        
+
+    cases = alerts.case_numbers
+    return render_template("doctor.html", doctor = doctor, cases = cases)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
