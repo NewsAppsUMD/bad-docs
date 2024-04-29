@@ -42,9 +42,10 @@ def index():
 
 @app.route('/doctor/<slug>')
 def detail(slug):
-    zipcode = Doctor.get(Doctor.clean_name==slug)
-    notices = Alert.select().where(Alert.clean_name==slug)
-    return render_template("detail.html", zipcode=zipcode, notices=notices, notices_count=len(notices), notice_json = notice_json, total_notices = total_notices)
+    doctor = Doctor.get(Doctor.clean_name==slug)
+    doctor_id = doctor.id
+    notices = Alert.select().where(Alert.doctor_info_id==id)
+    return render_template("doctor.html", doctor = doctor)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)

@@ -1,0 +1,211 @@
+
+#container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.navbar-dark {
+    background-color: black;
+}
+
+#logo {
+    border: 2px solid white;
+    height: 40px;
+    width: auto;
+    margin-left: 0px;
+}
+
+.barsign {
+    font-size: 20px;
+}
+
+#content {
+    margin-top: 65px;
+    font-family: 'Roboto', 'Arial', sans-serif;
+}
+.bgimage {
+    min-height: 700px;
+    background: url(../page_content/Flag_of_Maryland.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+    background-attachment: fixed;
+}
+#headline {
+    font-family: 'Arvo', serif;
+    font-size: 7em;
+    color: white;
+    text-transform: UPPERCASE;
+    text-align: center;
+    width: 70%;
+    padding-top: 10px;
+    margin: 0 auto;
+}
+
+#dek {
+    text-transform: UPPERCASE;
+    font-size: 3em;
+    color: white;
+    text-align: center;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+#credit {
+    font-size: 10px;
+    color: rgb(146, 146, 146);
+    text-align: right;
+}
+#story {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#byline {
+    font-family: 'Arvo', 'Garamond', serif;
+    font-size: 20px;
+    color: #4090b0;
+    text-align: left;
+    margin-top: 20px;
+}
+
+#date {
+    font-family: 'Arvo', 'Garamond', serif;
+    font-size: 15px;
+    color: black;
+    text-align: left;
+    margin-bottom: 10px;
+    color: #4090b0;
+    padding-bottom: 5px;
+    border-bottom: 3px solid black;
+}
+
+p {
+    margin-bottom: 10px;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-size: 18px;
+}
+.firstlet {
+    font-family: 'Arvo', 'Garamond', serif;
+    font-size: 40px;
+    font-style: normal;
+}
+
+.sechead {
+    font-family: 'Arvo', 'Garamond', serif;
+    text-align: left;
+    font-size: 30px;
+    color: #4090b0;
+    margin-top: 20px;
+}
+
+figcaption {
+    font-family: 'Roboto','sans-serif';
+    font-size: 11px;
+    color: rgb(172, 172, 172);
+}
+/*Image setup in site*/
+.photog {
+    width: 100%;
+}
+
+#sidepho {
+    width: 385px;
+}
+
+blockquote {
+    font-size: 30px;
+    font-family: 'Arvo', 'Garamond', serif;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 0 auto;
+    text-align: center;
+    border-top: 5px solid;
+    border-color: #4090b0;
+    border-bottom: 5px solid;
+    color: #4090b0;
+}
+
+#readmore {
+    margin-top: -90px;
+}
+
+.headers {
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-size: 18px;
+}
+
+a {
+    color: black;
+}
+
+@media only screen and (min-width: 1530px){
+    #headline {
+        font-size: 9em;
+    }
+    #dek {
+        font-size: 4em;
+    }
+}
+
+@media only screen and (max-width: 1205px){
+    #headline {
+        font-size: 6em;
+    }
+    #dek {
+        font-size: 2.5em;
+    }
+    .bgimage {
+        max-height: 500px;
+    }
+}
+
+@media only screen and (max-width: 770px){
+    #headline {
+        font-size: 5em;
+    }
+    #dek {
+        font-size: 2em;
+    }
+    #sidepho{
+        width: 100%
+    }
+}
+
+@media only screen and (max-width: 520px){
+    #headline {
+        font-size: 4em;
+    }
+    #dek {
+        font-size: 1.5em;
+    }
+}
+
+@media only screen and (max-width: 440px){
+    #headline {
+        font-size: 3em;
+    }
+    #dek {
+        font-size: 1em;
+    }
+    .bgimage {
+        min-height: 0;
+        max-height: 400px;
+    }
+}
+
+@media only screen and (max-width: 400px){
+    #headline {
+        font-size: 2em;
+    }
+    #dek {
+        font-size: 1em;
+    }
+    .bgimage {
+        min-height: 0;
+        max-height: 400px;
+    }
+}
