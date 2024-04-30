@@ -8,6 +8,10 @@ db = SqliteDatabase('bad_docs.db')
 class Doctor(Model):
     id = IntegerField(unique=True)
     clean_name = CharField()
+    first_name = CharField()
+    middle_name = CharField()
+    last_name = CharField()
+    suffix = CharField()
     doctor_type = CharField()
     license_num = CharField()
     
@@ -16,22 +20,26 @@ class Doctor(Model):
         table_name = 'doctor_info'
 
 class Alert(Model):
-    filename = CharField(unique=True)
+    id = CharField(unique=True)
     text_id = CharField(unique=True)
     url = CharField(unique=True)
     doctor_info_id = IntegerField()
-    first_name = CharField()
-    middle_name = CharField()
-    last_name = CharField()
-    suffix = CharField()
     type = CharField()
     year = IntegerField()
     date = DateField()
-    case_num = CharField()
     
     class Meta:
         database = db
         table_name = 'clean_alerts'
+
+class Cases(Model):
+    id  = IntegerField(unique=True)
+    case_num = CharField()
+    filename = CharField()
+
+    class Meta:
+        database = db
+        table_name = 'all_cases'
 
 @app.route("/")
 def index():
@@ -44,12 +52,12 @@ def index():
 def detail(slug):
     doctor = Doctor.get(Doctor.clean_name==slug)
     doctor_id = doctor.id
-    alerts = Alert.select().where(Alert.doctor_info_id==id)
+    alerts = Alert.select().where(Alert.doctor_info_id==doctor_id)
     cases = []
     for alert in alerts:
-        
-
-    cases = alerts.case_numbers
+        alert_id = alert.id
+        case_nos = Cases.select().where(Cases.filename==alert_id)
+        cases.append(case_nos)
     return render_template("doctor.html", doctor = doctor, cases = cases)
 
 if __name__ == '__main__':

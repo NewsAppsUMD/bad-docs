@@ -60,14 +60,19 @@
           <div class="col-lg-12">
             <div id="dek">
               License Number: {{ doctor.license_num }}
+              <!--{{ cases }}-->
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-12">
-            <div id="credit">
-              Case Numbers:
-              {% for doc in all_docs %}
+            <div id="dek">
+              <ul>
+                {% for case in cases %}
+                  <li>{{ case.case_num }}</li>
+                {% endfor %}
+              </ul>
+              
             </div>
           </div>
         </div>

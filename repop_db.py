@@ -49,7 +49,8 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
             result = list(set(result))
             for case in result:
                 case_dict['case_num'] = case
-                case_dict['filename'] = row['filename']
+                filename = row['filename'].replace(".txt", "")
+                case_dict['filename'] = filename
                 db["all_cases"].insert(case_dict, pk="id", replace=True)
         else:
             # If the file does not exist, set the text to None or an empty string

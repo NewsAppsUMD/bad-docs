@@ -41,7 +41,9 @@ python3 repop_db.py
 
 echo "Table populated successfully."
 
-sqlite-utils extract bad_docs.db clean_alerts text --table text
+sqlite-utils add-foreign-key bad_docs.db all_cases filename clean_alerts id
+
+sqlite-utils extract bad_docs.db clean_alerts filename text --table text
 
 #sqlite-utils extract 
 #sqlite-utils transform bad_docs.db text --rename id text_id
