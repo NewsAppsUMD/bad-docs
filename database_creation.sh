@@ -50,7 +50,7 @@ sqlite-utils extract bad_docs.db clean_alerts filename text --table text
 
 echo "Text table created"
 
-sqlite-utils extract bad_docs.db clean_alerts clean_name first_name middle_name last_name suffix doctor_type license_num --table doctor_info
+sqlite-utils extract bad_docs.db clean_alerts clean_name doctor_type license_num --table doctor_info
 
 echo "Doctor table created"
 

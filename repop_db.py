@@ -44,8 +44,8 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
                     result = ["None"]
             else:
                 result = ["None"]
-            for case in result:
-                case = case.replace(" ", "")
+            for index, case in enumerate(result):
+                result[index] = case.replace(" ", "")
             result = list(set(result))
             for case in result:
                 case_dict['case_num'] = case

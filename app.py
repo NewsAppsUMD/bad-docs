@@ -8,10 +8,6 @@ db = SqliteDatabase('bad_docs.db')
 class Doctor(Model):
     id = IntegerField(unique=True)
     clean_name = CharField()
-    first_name = CharField()
-    middle_name = CharField()
-    last_name = CharField()
-    suffix = CharField()
     doctor_type = CharField()
     license_num = CharField()
     
@@ -24,6 +20,10 @@ class Alert(Model):
     text_id = CharField(unique=True)
     url = CharField(unique=True)
     doctor_info_id = IntegerField()
+    first_name = CharField()
+    middle_name = CharField()
+    last_name = CharField()
+    suffix = CharField()
     type = CharField()
     year = IntegerField()
     date = DateField()
@@ -57,7 +57,8 @@ def detail(slug):
     for alert in alerts:
         alert_id = alert.id
         case_nos = Cases.select().where(Cases.filename==alert_id)
-        cases.append(case_nos)
+        for case in case_nos:
+            cases.append(case)
     return render_template("doctor.html", doctor = doctor, cases = cases)
 
 if __name__ == '__main__':

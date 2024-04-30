@@ -1,0 +1,17 @@
+<div class="row">
+                <div class="col-md-4">
+                <ul class="list-unstyled">
+                    {% for doc in all_docs %}
+                        <li> <a href="/doctor/{{ doc.clean_name }}">{{ doc.clean_name }} </a> </li>
+                        {% if loop.index % 3 == 0 and not loop.last %}
+                </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-unstyled">
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <title> In Violation: Disciplinary Alerts against Maryland Physicians </title>
