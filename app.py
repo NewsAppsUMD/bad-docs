@@ -1,7 +1,6 @@
 import os
 from peewee import *
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 db = SqliteDatabase('bad_docs.db')
         
@@ -41,12 +40,35 @@ class Cases(Model):
         database = db
         table_name = 'all_cases'
 
+@app.errorhandler(404)
+def _404(e):
+    render_template("not_found.html")
+
 @app.route("/")
 def index():
     notice_count = Doctor.select().count()
     all_docs = Doctor.select()
     template = 'index.html'
-    return render_template(template, count = notice_count, all_docs = all_docs)
+    return render_template(template)
+
+'''# Route for search form submission
+@app.route("/redirect", methods=['POST'])
+def search():
+    # Get search term from form
+    search_term = request.form.get('search_term')
+    # Search for vendors containing the search term in payee name and order by amount
+    search_result = Doctor.select().where(Doctor.clean_name.contains(search_term) | Doctor.license_num.contains(search_term))
+    slug = search_result[0].clean_name
+    # Redirect to jurisdiction page with slug parameter
+    return redirect(url_for("detail", slug=slug))'''
+
+@app.route("/search", methods=['POST'])
+def search():
+    # Get search term from form
+    search_term = request.form.get('search_term')
+    # Search for vendors containing the search term in payee name and order by amount
+    results = Doctor.select().where(Doctor.clean_name.contains(search_term) | Doctor.license_num.contains(search_term))
+    return render_template('index.html', results=results, search_term=search_term)
 
 @app.route('/doctor/<slug>')
 def detail(slug):
