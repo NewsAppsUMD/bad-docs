@@ -12,6 +12,19 @@
     margin-top: 30px;
     font-family: 'Roboto', 'Arial', sans-serif;
 }
+
+#table {
+    width: 75%;
+    margin: 0 auto;
+
+}
+
+#results {
+    width: 98%;
+    margin: 0 auto;
+    text-align: left;
+}
+
 .bgimage {
     min-height: 700px;
     background: url(Flag_of_Maryland.jpg);

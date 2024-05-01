@@ -66,8 +66,10 @@ def search():
 def search():
     # Get search term from form
     search_term = request.form.get('search_term')
-    # Search for vendors containing the search term in payee name and order by amount
-    results = Doctor.select().where(Doctor.clean_name.contains(search_term) | Doctor.license_num.contains(search_term))
+    if search_term == None:
+        results = None
+    else:
+        results = Doctor.select().where(Doctor.clean_name.contains(search_term) | Doctor.license_num.contains(search_term))
     return render_template('index.html', results=results, search_term=search_term)
 
 @app.route('/doctor/<slug>')
