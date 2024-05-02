@@ -44,9 +44,17 @@ doc_typecw <- name_cleaning %>%
   arrange(doctor_type) %>% 
   distinct(clean_name, .keep_all = TRUE) %>% 
   mutate(doctor_type = case_when(
+    str_detect(doctor_type, "RCP") ~ "Respiratory Care Practitioner",
     str_detect(clean_name, "Poroj|Gig|Shawyer|Wyrick") ~ "Radiographer",
-    str_detect(doctor_type, "Therapist") ~ "RT",
-    str_detect(doctor_type, "PA") ~ "PA-C",
+    str_detect(doctor_type, "PA") ~ "Physician Assistant",
+    str_detect(doctor_type, "PA-C") ~ "Certified Physician Assistant",
+    str_detect(doctor_type, "DO") ~ "Doctor of Osteopathic Medicine",
+    str_detect(doctor_type, "NMT") ~ "Nuclear Medicine Technologist",
+    str_detect(doctor_type, "RT|Therapist") ~ "Respiratory Therapist",
+    str_detect(doctor_type, "ATC") ~ "Certified Athletic Trainer",
+    str_detect(doctor_type, "ND") ~ "Neuropathic Doctor",
+    str_detect(doctor_type, "MD") ~ "Doctor of Medicine",
+    str_detect(doctor_type, "Polysom|RPSGT") ~ "Polysomnographic Technologist",
     TRUE ~ doctor_type
   )) %>% 
   select(clean_name, doctor_type)

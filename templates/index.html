@@ -103,18 +103,9 @@
         </div>
 
         <div class="row">
-          {% if top_five %}
-          <div id="story"> Most recent alerts </div>
-            {% for alert in top_five %}
-              <a href={{ alert.url }}>{{ alert.date }}: {{ alert.first_name }} {{ alert.last_name }} faces a {{ alert.type }}</a> 
-              <br>
-            {% endfor %}
-          {% endif %}
-        </div>
-
-        <div class="row" id="table">
           {% if results %}
           <div id="search_res"> Search Results for {{ search_term }} </div>
+          <div id="table">
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -131,14 +122,29 @@
                   <td>{{ record.license_num }}</td>
                 </tr>
               {% endfor %}
-            </tbody>      
+            </tbody>
+          </div>      
           </table>
-          {% else %}
-          <div id="story_offset"> No Results found for {{ search_term }} </div>
+          {% elif search_term == "" %}
+          {% elif (results == None) %}
+          <div id="search"> No Results found for {{ search_term }} </div>
         {% endif %}
       </div>
-      
+
+        <div class="row">
+          {% if top_five %}
+          <div id="story"> Most recent alerts </div>
+            {% for alert in top_five %}
+              <a href={{ alert.url }}>{{ alert.date }}: {{ alert.first_name }} {{ alert.last_name }} - {{ alert.type }}</a> 
+              <br>
+            {% endfor %}
+          {% endif %}
+        </div>       
+        <div class="row col-md-6">
+          <br>
+          <iframe title="Physicians by Type" aria-describedby="" aria-label="Interactive column chart" id="datawrapper-chart-khNwL" src="//datawrapper.dwcdn.net/0VTZ2/1/" scrolling="no" frameborder="0" style="border: none; min-width: 600px; width: 100%;" height="400"></iframe>
+        </div>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>

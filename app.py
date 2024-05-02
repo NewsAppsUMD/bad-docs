@@ -49,7 +49,7 @@ def index():
     notice_count = Doctor.select().count()
     all_docs = Doctor.select()
     template = 'index.html'
-    top_five = Alert.select().order_by(Alert.date).limit(5)
+    top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
     return render_template(template, top_five = top_five)
 
 '''# Route for search form submission
@@ -66,9 +66,9 @@ def search():
 @app.route("/search", methods=['POST'])
 def search():
     # Get search term from form
-    top_five = Alert.select().order_by(Alert.date).limit(5)
+    top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
     search_term = request.form.get('search_term')
-    if search_term == None:
+    if search_term == "":
         results = None
     else:
         results = Doctor.select().where(Doctor.clean_name.contains(search_term) | Doctor.license_num.contains(search_term))

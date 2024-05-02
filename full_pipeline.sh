@@ -5,6 +5,7 @@ pip install datasette
 pip install sqlite-utils
 pip install datawrapper
 datasette install datasette-codespaces
+pip install sqlite_utils
 
 python3 scrape.py
 Rscript license_mutations.R
