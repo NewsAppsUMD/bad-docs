@@ -102,9 +102,19 @@
           </div>
         </div>
 
+        <div class="row">
+          {% if top_five %}
+          <div id="story"> Most recent alerts </div>
+            {% for alert in top_five %}
+              <a href={{ alert.url }}>{{ alert.date }}: {{ alert.first_name }} {{ alert.last_name }} faces a {{ alert.type }}</a> 
+              <br>
+            {% endfor %}
+          {% endif %}
+        </div>
+
         <div class="row" id="table">
           {% if results %}
-          <div id="story_offset"> Search Results for {{ search_term }} </div>
+          <div id="search_res"> Search Results for {{ search_term }} </div>
           <table class="table table-bordered">
             <thead>
               <tr>

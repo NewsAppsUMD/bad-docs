@@ -25,6 +25,20 @@
     text-align: left;
 }
 
+#search_res {
+    font-family: "Hind Silliguri", sans-serif;
+    width: 100%;
+    font-size: 30px;
+    margin: 0 auto;
+    margin-left: -12px;
+    margin-top: 30px;
+}
+
+th {
+    font-family: "Hind Silliguri", sans-serif;
+    font-weight: 700px;
+}
+
 .bgimage {
     min-height: 700px;
     background: url(Flag_of_Maryland.jpg);

@@ -3,6 +3,7 @@ pip install csvkit
 pip install pdf2image-cli
 pip install datasette
 pip install sqlite-utils
+pip install datawrapper
 datasette install datasette-codespaces
 
 python3 scrape.py

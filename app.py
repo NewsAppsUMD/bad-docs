@@ -49,7 +49,8 @@ def index():
     notice_count = Doctor.select().count()
     all_docs = Doctor.select()
     template = 'index.html'
-    return render_template(template)
+    top_five = Alert.select().order_by(Alert.date).limit(5)
+    return render_template(template, top_five = top_five)
 
 '''# Route for search form submission
 @app.route("/redirect", methods=['POST'])
@@ -65,12 +66,13 @@ def search():
 @app.route("/search", methods=['POST'])
 def search():
     # Get search term from form
+    top_five = Alert.select().order_by(Alert.date).limit(5)
     search_term = request.form.get('search_term')
     if search_term == None:
         results = None
     else:
         results = Doctor.select().where(Doctor.clean_name.contains(search_term) | Doctor.license_num.contains(search_term))
-    return render_template('index.html', results=results, search_term=search_term)
+    return render_template('index.html', results=results, search_term=search_term, top_five = top_five)
 
 @app.route('/doctor/<slug>')
 def detail(slug):
@@ -83,7 +85,8 @@ def detail(slug):
         case_nos = Cases.select().where(Cases.filename==alert_id)
         for case in case_nos:
             cases.append(case)
-    return render_template("doctor.html", doctor = doctor, cases = cases)
+    top_record = alerts[0]
+    return render_template("doctor.html", doctor = doctor, cases = cases, top_record = top_record)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)

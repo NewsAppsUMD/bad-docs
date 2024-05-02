@@ -26,6 +26,8 @@ name_cleaning <- doc_name_type %>%
     middle_name = gsub(",", "", middle_name),
     last_name = gsub(",", "", last_name),
     last_name = gsub("\\.", "", last_name),
+    first_name = gsub(",", "", first_name),
+    first_name = gsub("\\.", "", first_name),
     suffix = gsub(",", "", suffix)
   ) %>% 
   mutate(last_name = case_when(
