@@ -1,6 +1,8 @@
 import os
 from peewee import *
 from flask import Flask, render_template, request, redirect, url_for
+from datetime import date
+from datetime import datetime
 app = Flask(__name__)
 db = SqliteDatabase('bad_docs.db')
         
@@ -14,11 +16,20 @@ class Doctor(Model):
         database = db
         table_name = 'doctor_info'
 
+class Text(Model):
+    id = IntegerField(unique=True)
+    filename = CharField()
+    text = CharField()
+
+    class Meta:
+        database = db
+        table_name = 'text'
+
 class Alert(Model):
     id = CharField(unique=True)
-    text_id = CharField(unique=True)
+    text_id = ForeignKeyField(Text)
     url = CharField(unique=True)
-    doctor_info_id = IntegerField()
+    doctor_info_id = ForeignKeyField(Doctor)
     first_name = CharField()
     middle_name = CharField()
     last_name = CharField()
@@ -39,6 +50,7 @@ class Cases(Model):
     class Meta:
         database = db
         table_name = 'all_cases'
+
 
 @app.errorhandler(404)
 def _404(e):
@@ -63,8 +75,8 @@ def search():
     # Redirect to jurisdiction page with slug parameter
     return redirect(url_for("detail", slug=slug))'''
 
-@app.route("/search", methods=['POST'])
-def search():
+@app.route("/searchdocs", methods=['POST'])
+def searchdocs():
     # Get search term from form
     top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
     search_term = request.form.get('search_term')
@@ -72,7 +84,19 @@ def search():
         results = None
     else:
         results = Doctor.select().where(Doctor.clean_name.contains(search_term) | Doctor.license_num.contains(search_term))
-    return render_template('index.html', results=results, search_term=search_term, top_five = top_five)
+    return render_template('index.html', resultsd=results, search_term=search_term, top_five = top_five)
+
+@app.route("/searchtext", methods=['POST'])
+def searchtext():
+    # Get search term from form
+    top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
+    search_term = request.form.get('search_term')
+    if search_term == "":
+        results = None
+    else:
+        textresults = Text.select().where(Text.text.contains(search_term))
+        alerts = Alert.select().where(Alert.text_id.in_(textresults))
+    return render_template('index.html', resultst=alerts, search_term=search_term, top_five = top_five)
 
 @app.route('/doctor/<slug>')
 def detail(slug):

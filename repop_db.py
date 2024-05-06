@@ -24,6 +24,7 @@ def read_text_file(file_path):
 with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
+        row['date'] = row['date'].strftime("%B %d, %Y")
         # Generate the path to the .txt file based on the filename column
         txt_file_path = txt_files_directory / row['filename']
         # Check if the .txt file exists

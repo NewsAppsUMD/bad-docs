@@ -74,13 +74,13 @@
 
           <div class="col-md-5">
             <div id="story_offset">
-            Search by Case File Text
+            Search Case File Text
             </div>
           </div>
 
         <div class="row">
           <div class="col-md-5">
-            <form class="form-inline" action="{{ url_for('search') }}" method="post">
+            <form class="form-inline" action="{{ url_for('searchdocs') }}" method="post">
               <div class="form-group">
                 <input type="text" name="search_term" class="form-control" placeholder="Search by Doctor Name or License Number">
               </div>
@@ -93,9 +93,9 @@
           
 
           <div class="col-md-5">
-            <form class="form-inline" action="{{ url_for('search') }}" method="post">
+            <form class="form-inline" action="{{ url_for('searchtext') }}" method="post">
               <div class="form-group">
-                <input type="text" name="search_term" class="form-control" placeholder="Search by Case File Text">
+                <input type="text" name="search_term" class="form-control" placeholder="Search Case File Text">
               </div>
               <button type="submit" class="btn btn-primary">Search</button>
             </form>
@@ -103,8 +103,8 @@
         </div>
 
         <div class="row">
-          {% if results %}
-          <div id="search_res"> Search Results for {{ search_term }} </div>
+          {% if resultsd %}
+          <div id="search_res"> Search Results for "{{ search_term }}" </div>
           <div id="table">
           <table class="table table-bordered">
             <thead>
@@ -115,7 +115,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for record in results %}
+              {% for record in resultsd %}
                 <tr>
                   <td><a href={{ url_for('detail', slug=record.clean_name) }}>{{ record.clean_name }}</a></td>
                   <td>{{ record.doctor_type }}</td>
@@ -130,6 +130,39 @@
           <div id="search"> No Results found for {{ search_term }} </div>
         {% endif %}
       </div>
+
+      <div class="row">
+        {% if resultst %}
+        <div id="search_res"> Search Results for "{{ search_term }}" </div>
+        <div id="table">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Doctor Name</th>
+              <th>Doctor Type</th>
+              <th>License Number</th>
+              <th>Filing Date</th>
+              <th>PDF Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in resultst %}
+              <tr>
+                <td><a href={{ url_for('detail', slug=record.doctor_info_id.clean_name) }}>{{ record.doctor_info_id.clean_name }}</a></td>
+                <td>{{ record.doctor_info_id.doctor_type }}</td>
+                <td>{{ record.doctor_info_id.license_num }}</td>
+                <td>{{ record.date }}</td>
+                <td><a href={{ record.url }}> {{ record.id }}</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </div>      
+        </table>
+        {% elif search_term == "" %}
+        {% elif (results == None) %}
+        <div id="search"> No Results found for {{ search_term }} </div>
+      {% endif %}
+    </div>
 
         <div class="row">
           {% if top_five %}

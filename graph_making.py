@@ -28,6 +28,6 @@ chart_config = dw.create_chart(
 )
 
 chart_id = chart_config["id"]
-dw.publish_chart(chart_id)
 
-dw.display_chart(chart_id)
+
+
