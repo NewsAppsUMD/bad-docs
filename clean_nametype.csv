@@ -1,4 +1,4 @@
-id,url,clean_name,first_name,middle_name,last_name,suffix,doctor_type,type,year,filename,date,license_num
+file_id,url,clean_name,first_name,middle_name,last_name,suffix,doctor_type,type,year,filename,date,license_num
 d1604912.124,https://www.mbp.state.md.us/BPQAPP/orders/d1604912.124.pdf,Lawrence Egbert,Lawrence,D,Egbert,NA,Doctor of Medicine,Medical License Revoked,2014,d1604912.124.txt,2014-12-12,D0016049
 h4828611.244,https://www.mbp.state.md.us/BPQAPP/orders/h4828611.244.pdf,Joan Smith,Joan,NA,Smith,NA,Unlicensed,Medical License Cease and Desist Order,2014,h4828611.244.txt,2014-11-24,Unlicensed
 z0040911.174,https://www.mbp.state.md.us/BPQAPP/orders/z0040911.174.pdf,Donald Busick,Donald,E,Busick,Jr.,Polysomnographic Technologist,Medical License Suspended for Delinquent Child Support,2014,z0040911.174.txt,2014-11-17,Z0000409

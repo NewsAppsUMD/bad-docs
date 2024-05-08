@@ -1,4 +1,4 @@
-id,url,name,type,year,filename,date,doctor_type
+file_id,url,name,type,year,filename,date,doctor_type
 d1604912.124,https://www.mbp.state.md.us/BPQAPP/orders/d1604912.124.pdf,"Lawrence D. Egbert, M.D.",Medical License Revoked,2014,d1604912.124.txt,2014-12-12,M.D.
 h4828611.244,https://www.mbp.state.md.us/BPQAPP/orders/h4828611.244.pdf,"Joan Smith, D.O.",Medical License Cease and Desist Order,2014,h4828611.244.txt,2014-11-24,D.O.
 z0040911.174,https://www.mbp.state.md.us/BPQAPP/orders/z0040911.174.pdf,"Donald E. Busick, Jr., Polysom",Medical License Suspended for Delinquent Child Support,2014,z0040911.174.txt,2014-11-17,"Jr., Polysom"

@@ -64,7 +64,7 @@ doc_typeclean <- name_cleaning %>%
   left_join(doc_typecw, by ="clean_name")
 
 anti_clean <- doc_typeclean %>%
-  select(id, url, clean_name, first_name, middle_name, last_name, suffix, doctor_type, type:date) %>% 
+  select(file_id, url, clean_name, first_name, middle_name, last_name, suffix, doctor_type, type:date) %>% 
   mutate(license_num = case_when(
     doctor_type == "Unlicensed" ~ NA,
     TRUE ~ substring(id, 1, nchar(id) - 6)

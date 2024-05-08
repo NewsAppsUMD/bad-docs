@@ -23,11 +23,12 @@ type_df = pd.DataFrame(type_count, columns=("Physician Type", "Count"))
 
 chart_config = dw.create_chart(
     title="Physicians by Type",
-    chart_type="column-chart",
+    chart_type="tables",
     data=type_df
 )
 
 chart_id = chart_config["id"]
+print(chart_id)
 
 
 

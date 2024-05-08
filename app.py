@@ -27,6 +27,7 @@ class Text(Model):
 
 class Alert(Model):
     id = CharField(unique=True)
+    file_id = CharField(unique=True)
     text_id = ForeignKeyField(Text)
     url = CharField(unique=True)
     doctor_info_id = ForeignKeyField(Doctor)
@@ -37,6 +38,7 @@ class Alert(Model):
     type = CharField()
     year = IntegerField()
     date = DateField()
+    date_str = CharField()
     
     class Meta:
         database = db
@@ -45,7 +47,8 @@ class Alert(Model):
 class Cases(Model):
     id  = IntegerField(unique=True)
     case_num = CharField()
-    filename = CharField()
+    file_id = CharField()
+    alert_id = ForeignKeyField(Alert)
 
     class Meta:
         database = db
@@ -103,14 +106,16 @@ def detail(slug):
     doctor = Doctor.get(Doctor.clean_name==slug)
     doctor_id = doctor.id
     alerts = Alert.select().where(Alert.doctor_info_id==doctor_id)
-    cases = []
-    for alert in alerts:
-        alert_id = alert.id
-        case_nos = Cases.select().where(Cases.filename==alert_id)
-        for case in case_nos:
-            cases.append(case)
+    cases = Cases.select().where(Cases.alert_id.in_(alerts))
     top_record = alerts[0]
     return render_template("doctor.html", doctor = doctor, cases = cases, top_record = top_record)
+
+@app.route('/type/<slug>')
+def type(slug):
+    doctors = Doctor.select().where(Doctor.doctor_type==slug)
+    alerts = Alert.select().where(Alert.doctor_info_id.doctor_type==slug)
+    cases = Cases.select().where(Cases.alert_id.in_(alerts))
+    return render_template("type.html", doctors = doctors, alerts = alerts, cases = cases)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)

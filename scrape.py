@@ -58,5 +58,5 @@ for year in years:
 outfile = open("alerts.csv", "w")
 writer = csv.writer(outfile)
 # i am writing a header row
-writer.writerow(["id", "url", "name", "type", "date","year"])
+writer.writerow(["file_id", "url", "name", "type", "date","year"])
 writer.writerows(list_of_rows)

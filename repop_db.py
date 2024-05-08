@@ -24,7 +24,8 @@ def read_text_file(file_path):
 with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-        row['date'] = row['date'].strftime("%B %d, %Y")
+        date = datetime.strptime(row['date'],"%Y-%m-%d")
+        row['date_str'] = date.strftime("%B %d, %Y")
         # Generate the path to the .txt file based on the filename column
         txt_file_path = txt_files_directory / row['filename']
         # Check if the .txt file exists
@@ -51,7 +52,7 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
             for case in result:
                 case_dict['case_num'] = case
                 filename = row['filename'].replace(".txt", "")
-                case_dict['filename'] = filename
+                case_dict['file_id'] = filename
                 db["all_cases"].insert(case_dict, pk="id", replace=True)
         else:
             # If the file does not exist, set the text to None or an empty string
