@@ -126,7 +126,7 @@
           </div>      
           </table>
           {% elif search_term == "" %}
-          {% elif (results == None) %}
+          {% elif resultsd == "No doctor results found" %}
           <div id="search"> No Results found for {{ search_term }} </div>
         {% endif %}
       </div>
@@ -159,7 +159,7 @@
         </div>      
         </table>
         {% elif search_term == "" %}
-        {% elif (results == None) %}
+        {% elif resultst == "No text results found" %}
         <div id="search"> No Results found for {{ search_term }} </div>
       {% endif %}
     </div>

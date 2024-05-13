@@ -35,9 +35,13 @@ name_cleaning <- doc_name_type %>%
     TRUE ~ last_name
   )) %>% 
   mutate(middle_name = case_when(
-    last_name == middle_name ~ NA,
+    last_name == middle_name ~ "",
     TRUE ~ middle_name
   )) %>% 
+  mutate(first_name = case_when(
+    last_name == "Dormu" ~ "Jeffery",
+    TRUE ~ first_name
+  )) %>%
   mutate(clean_name = paste0(first_name, " ", last_name))
 
 doc_typecw <- name_cleaning %>% 
@@ -61,14 +65,14 @@ doc_typecw <- name_cleaning %>%
 
 doc_typeclean <- name_cleaning %>% 
   select(-doctor_type) %>% 
-  left_join(doc_typecw, by ="clean_name")
+  left_join(doc_typecw, by = "clean_name")
 
 anti_clean <- doc_typeclean %>%
   select(file_id, url, clean_name, first_name, middle_name, last_name, suffix, doctor_type, type:date) %>% 
   mutate(license_num = case_when(
-    doctor_type == "Unlicensed" ~ NA,
-    TRUE ~ substring(id, 1, nchar(id) - 6)
-  )) %>% 
+    doctor_type == "Unlicensed" ~ "Unlicensed",
+    TRUE ~ substring(file_id, 1, nchar(file_id) - 6)
+  )) %>%
   mutate(license_let = str_to_upper(substring(license_num, 1, 1))) %>% 
   mutate(license_dig = as.numeric(gsub("\\D", "", license_num))) %>% 
   mutate(license_dig = case_when(

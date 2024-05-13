@@ -65,7 +65,8 @@ def index():
     all_docs = Doctor.select()
     template = 'index.html'
     top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
-    return render_template(template, top_five = top_five)
+    type_table = Doctor.select(Doctor.doctor_type, fn.COUNT(Doctor.clean_name).alias('count')).group_by(Doctor.doctor_type)
+    return render_template(template, top_five = top_five, type_table = type_table)
 
 '''# Route for search form submission
 @app.route("/redirect", methods=['POST'])
@@ -84,7 +85,7 @@ def searchdocs():
     top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
     search_term = request.form.get('search_term')
     if search_term == "":
-        results = None
+        results = "No doctor results found"
     else:
         results = Doctor.select().where(Doctor.clean_name.contains(search_term) | Doctor.license_num.contains(search_term))
     return render_template('index.html', resultsd=results, search_term=search_term, top_five = top_five)
@@ -95,7 +96,7 @@ def searchtext():
     top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
     search_term = request.form.get('search_term')
     if search_term == "":
-        results = None
+        results = "No text results found"
     else:
         textresults = Text.select().where(Text.text.contains(search_term))
         alerts = Alert.select().where(Alert.text_id.in_(textresults))
