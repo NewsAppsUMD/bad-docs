@@ -32,6 +32,17 @@
     margin: 0 auto;
 }
 
+#type_head {
+    font-family: 'Arvo', serif;
+    font-size: 4em;
+    color: black;
+    text-transform: capitalize;
+    text-align: left;
+    width: 100%;
+    padding-top: 30px;
+    margin: 0 auto;
+}
+
 #404error {
     font-family: 'Arvo', serif;
     font-size: 3em;

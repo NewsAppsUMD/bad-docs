@@ -13,6 +13,7 @@ doc_name_type <- alert_textfiles %>%
   mutate(doc_nameclean = sub(",[^,]*$", "", name)) %>% 
   mutate(doctor_type = case_when(
     str_detect(type, "ithout a License") ~ "Unlicensed",
+    str_detect(type, "Cease and Desist Order") ~ "Doctor of Osteopathic Medicine",
     str_detect(type, "Cease and Desist") ~ "Unlicensed",
     str_detect(doc_nameclean, doctor_type) ~ NA,
     TRUE ~ doctor_type
@@ -31,6 +32,7 @@ name_cleaning <- doc_name_type %>%
     suffix = gsub(",", "", suffix)
   ) %>% 
   mutate(last_name = case_when(
+    last_name == "Jr" ~ middle_name,
     is.na(last_name) ~ middle_name,
     TRUE ~ last_name
   )) %>% 

@@ -1,6 +1,6 @@
 file_id,url,clean_name,first_name,middle_name,last_name,suffix,doctor_type,type,year,filename,date,license_num
 d1604912.124,https://www.mbp.state.md.us/BPQAPP/orders/d1604912.124.pdf,Lawrence Egbert,Lawrence,D,Egbert,NA,Doctor of Medicine,Medical License Revoked,2014,d1604912.124.txt,2014-12-12,D0016049
-h4828611.244,https://www.mbp.state.md.us/BPQAPP/orders/h4828611.244.pdf,Joan Smith,Joan,,Smith,NA,Unlicensed,Medical License Cease and Desist Order,2014,h4828611.244.txt,2014-11-24,UNA
+h4828611.244,https://www.mbp.state.md.us/BPQAPP/orders/h4828611.244.pdf,Joan Smith,Joan,,Smith,NA,Doctor of Osteopathic Medicine,Medical License Cease and Desist Order,2014,h4828611.244.txt,2014-11-24,H0048286
 z0040911.174,https://www.mbp.state.md.us/BPQAPP/orders/z0040911.174.pdf,Donald Busick,Donald,E,Busick,Jr.,Polysomnographic Technologist,Medical License Suspended for Delinquent Child Support,2014,z0040911.174.txt,2014-11-17,Z0000409
 r0500911.174,https://www.mbp.state.md.us/BPQAPP/orders/r0500911.174.pdf,David Hush,David,M,Hush,NA,Respiratory Therapist,Medical License Revoked,2014,r0500911.174.txt,2014-11-17,R0005009
 d2520911.134,https://www.mbp.state.md.us/BPQAPP/orders/d2520911.134.pdf,John McLean,John,R,McLean,NA,Doctor of Medicine,Medical License Revoked,2014,d2520911.134.txt,2014-11-13,D0025209
@@ -218,7 +218,7 @@ D3618201.039,https://www.mbp.state.md.us/BPQAPP/orders/D3618201.039.pdf,Crystal 
 D4482101.029,https://www.mbp.state.md.us/BPQAPP/orders/D4482101.029.pdf,David Silverstein,David,Morton,Silverstein,NA,Doctor of Medicine,Revocation for a Minimum of One Year.,2019,D4482101.029.txt,2019-01-02,D0044821
 C0529601.029,https://www.mbp.state.md.us/BPQAPP/orders/C0529601.029.pdf,Tasha Anderson,Tasha,M,Anderson,NA,Physician Assistant,Surrender of License.,2019,C0529601.029.txt,2019-01-02,C0005296
 D5509401.029,https://www.mbp.state.md.us/BPQAPP/orders/D5509401.029.pdf,Jesus Burbano,Jesus,,Burbano,NA,Doctor of Medicine,Summary Suspension.,2019,D5509401.029.txt,2019-01-02,D0055094
-D2754412.290,https://www.mbp.state.md.us/BPQAPP/orders/D2754412.290.pdf,John Jr,John,Vitarello,Jr,NA,Doctor of Medicine,Summary Suspension.,2020,D2754412.290.txt,2020-12-29,D0027544
+D2754412.290,https://www.mbp.state.md.us/BPQAPP/orders/D2754412.290.pdf,John Vitarello,John,,Vitarello,NA,Doctor of Medicine,Summary Suspension.,2020,D2754412.290.txt,2020-12-29,D0027544
 L0657812.220,https://www.mbp.state.md.us/BPQAPP/orders/L0657812.220.pdf,Liuchuan Chen,Liuchuan,,Chen,NA,Respiratory Care Practitioner,Revocation.,2020,L0657812.220.txt,2020-12-22,L0006578
 D8833912.140,https://www.mbp.state.md.us/BPQAPP/orders/D8833912.140.pdf,Abhishek Freyer,Abhishek,,Freyer,NA,Doctor of Medicine,"Order for Summary Suspension, dated October 26, 2020, is terminated as moot. Reprimand. Suspension; Terms and conditions.",2020,D8833912.140.txt,2020-12-14,D0088339
 C0426112.040,https://www.mbp.state.md.us/BPQAPP/orders/C0426112.040.pdf,Ahmed Gbadamosi,Ahmed,,Gbadamosi,NA,Physician Assistant,Surrender of License.,2020,C0426112.040.txt,2020-12-04,C0004261
@@ -320,7 +320,7 @@ D0907104.261,https://www.mbp.state.md.us/BPQAPP/orders/D0907104.261.pdf,Charles 
 N0047004.151,https://www.mbp.state.md.us/BPQAPP/orders/N0047004.151.pdf,Ralph Muller,Ralph,,Muller,NA,Nuclear Medicine Technologist,Summary Suspension Affirmed.,2021,N0047004.151.txt,2021-04-15,N0000470
 L0704904.151,https://www.mbp.state.md.us/BPQAPP/orders/L0704904.151.pdf,Melissa Rutherford,Melissa,,Rutherford,NA,Respiratory Care Practitioner,Summary Suspension Affirmed.,2021,L0704904.151.txt,2021-04-15,L0007049
 D7826004.131,https://www.mbp.state.md.us/BPQAPP/orders/D7826004.131.pdf,Duane Stillions,Duane,M,Stillions,NA,Doctor of Medicine,Surrender of License.,2021,D7826004.131.txt,2021-04-13,D0078260
-L0521504.091,https://www.mbp.state.md.us/BPQAPP/orders/L0521504.091.pdf,James Jr,James,Lee,Jr,NA,Respiratory Care Practitioner,Reprimand. Civil fine of $500.00; Payable within six months. Suspended; Terms and conditions.,2021,L0521504.091.txt,2021-04-09,L0005215
+L0521504.091,https://www.mbp.state.md.us/BPQAPP/orders/L0521504.091.pdf,James Lee,James,,Lee,NA,Respiratory Care Practitioner,Reprimand. Civil fine of $500.00; Payable within six months. Suspended; Terms and conditions.,2021,L0521504.091.txt,2021-04-09,L0005215
 D3261104.091,https://www.mbp.state.md.us/BPQAPP/orders/D3261104.091.pdf,Robert Williams,Robert,P,Williams,NA,Doctor of Medicine,Reprimand. Suspended; Terms and conditions.,2021,D3261104.091.txt,2021-04-09,D0032611
 D4551904.091,https://www.mbp.state.md.us/BPQAPP/orders/D4551904.091.pdf,Julian Choe,Julian,Pappy,Choe,NA,Doctor of Medicine,"Reprimand. Probation for a minimum of one year; Terms and conditions. Civil fine of $10,000.00; Payable within one year.",2021,D4551904.091.txt,2021-04-09,D0045519
 L0704903.311,https://www.mbp.state.md.us/BPQAPP/orders/L0704903.311.pdf,Melissa Rutherford,Melissa,,Rutherford,NA,Respiratory Care Practitioner,Summary Suspension.,2021,L0704903.311.txt,2021-03-31,L0007049

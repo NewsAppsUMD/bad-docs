@@ -65,10 +65,32 @@ th {
     margin-bottom: -50px;
 }
 
+#type_head {
+    font-family: 'DM Serif Display', serif;
+    font-size: 7em;
+    color: #152238;
+    text-transform: capitalize;
+    text-align: left;
+    width: 100%;
+    padding-top: 10px;
+    margin: 0 auto;
+    margin-bottom: -20px;
+}
+
 #dek {
     font-family: 'DM Serif Display', serif;
     text-transform: capitalize;
     font-size: 3.5em;
+    color: black;
+    text-align: left;
+    margin: 0 auto;
+    margin-left: 0;
+    padding-bottom: 20px;
+}
+
+#type_dek {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2em;
     color: black;
     text-align: left;
     margin: 0 auto;

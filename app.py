@@ -116,9 +116,14 @@ def detail(slug):
 @app.route('/type/<slug>')
 def type(slug):
     doctors = Doctor.select().where(Doctor.doctor_type==slug)
-    alerts = Alert.select().where(Alert.doctor_info_id.doctor_type==slug)
+    count_doc = doctors.count()
+    alerts = Alert.select().where(Alert.doctor_info_id.in_(doctors))
+    count_alerts = alerts.count()
     cases = Cases.select().where(Cases.alert_id.in_(alerts))
-    return render_template("type.html", doctors = doctors, alerts = alerts, cases = cases)
+    count_cases = cases.count()
+    c1 = cases[0]
+    return render_template("type.html", doctors = doctors, alerts = alerts, cases = cases, 
+                           countd = count_doc, counta = count_alerts, countc = count_cases, c1 = c1)
 
 # Route for search form submission
 @app.route("/dataset", methods=['POST'])
