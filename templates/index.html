@@ -161,23 +161,43 @@
         {% elif search_term == "" %}
         {% elif resultst == "No text results found" %}
         <div id="search"> No Results found for {{ search_term }} </div>
-      {% endif %}
-    </div>
+        {% endif %}
+      </div>
 
-        <div class="row">
-          {% if top_five %}
-          <div id="story"> Most recent alerts </div>
-            {% for alert in top_five %}
-              <a href={{ alert.url }}>{{ alert.date_str }}: {{ alert.first_name }} {{ alert.last_name }} - {{ alert.type }}</a> 
-              <br>
-            {% endfor %}
-          {% endif %}
-        </div>       
-        <div class="row col-md-6">
-          <br>
-          <iframe title="Physicians by Type" aria-describedby="" aria-label="Interactive column chart" id="datawrapper-chart-khNwL" src="//datawrapper.dwcdn.net/74LUU/" scrolling="no" frameborder="0" style="border: none; min-width: 600px; width: 100%;" height="400"></iframe>
+      <div class="row">
+        {% if top_five %}
+        <div id="search_res"> Most recent alerts </div>
+          {% for alert in top_five %}
+            <a href={{ alert.url }}>{{ alert.date_str }}: {{ alert.first_name }} {{ alert.last_name }} - {{ alert.type }}</a> 
+            <br>
+          {% endfor %}
+        {% endif %}
+      </div>    
+      
+      <div class="row col-md-6">
+        <div id="search_res">
+          Doctors by Type
+        </div>
+        <div id="table">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Doctor Type</th>
+                <th>Number of Doctors</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for type in type_table %}
+                <tr>
+                  <td><a href={{ url_for('type', slug=type.doctor_type) }}>{{ type.doctor_type }}</a></td>
+                  <td>{{ type.count }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>    
+          </table>
         </div>
       </div>
     </div>
+  </div>
   </body>
 </html>

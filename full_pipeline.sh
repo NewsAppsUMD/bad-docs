@@ -16,6 +16,7 @@ bash combine_text.sh
 python3 mod_alerts.py
 Rscript data_cleaning.R
 bash database_creation.sh
+python3 app.py
 
 
 

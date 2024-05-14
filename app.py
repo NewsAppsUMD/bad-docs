@@ -65,7 +65,7 @@ def index():
     all_docs = Doctor.select()
     template = 'index.html'
     top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
-    type_table = Doctor.select(Doctor.doctor_type, fn.COUNT(Doctor.clean_name).alias('count')).group_by(Doctor.doctor_type)
+    type_table = Doctor.select(Doctor.doctor_type, fn.COUNT(Doctor.doctor_type).alias('count')).group_by(Doctor.doctor_type)
     return render_template(template, top_five = top_five, type_table = type_table)
 
 '''# Route for search form submission
@@ -83,24 +83,26 @@ def search():
 def searchdocs():
     # Get search term from form
     top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
+    type_table = Doctor.select(Doctor.doctor_type, fn.COUNT(Doctor.doctor_type).alias('count')).group_by(Doctor.doctor_type)
     search_term = request.form.get('search_term')
     if search_term == "":
         results = "No doctor results found"
     else:
         results = Doctor.select().where(Doctor.clean_name.contains(search_term) | Doctor.license_num.contains(search_term))
-    return render_template('index.html', resultsd=results, search_term=search_term, top_five = top_five)
+    return render_template('index.html', resultsd=results, search_term=search_term, top_five = top_five, type_table=type_table)
 
 @app.route("/searchtext", methods=['POST'])
 def searchtext():
     # Get search term from form
     top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
+    type_table = Doctor.select(Doctor.doctor_type, fn.COUNT(Doctor.doctor_type).alias('count')).group_by(Doctor.doctor_type)
     search_term = request.form.get('search_term')
     if search_term == "":
         results = "No text results found"
     else:
         textresults = Text.select().where(Text.text.contains(search_term))
         alerts = Alert.select().where(Alert.text_id.in_(textresults))
-    return render_template('index.html', resultst=alerts, search_term=search_term, top_five = top_five)
+    return render_template('index.html', resultst=alerts, search_term=search_term, top_five = top_five, type_table = type_table)
 
 @app.route('/doctor/<slug>')
 def detail(slug):
@@ -117,6 +119,12 @@ def type(slug):
     alerts = Alert.select().where(Alert.doctor_info_id.doctor_type==slug)
     cases = Cases.select().where(Cases.alert_id.in_(alerts))
     return render_template("type.html", doctors = doctors, alerts = alerts, cases = cases)
+
+# Route for search form submission
+@app.route("/dataset", methods=['POST'])
+def dataset():
+    cases = Cases.select()
+    return render_template("dataset.html", cases = cases)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
