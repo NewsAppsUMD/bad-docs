@@ -55,9 +55,7 @@ class Cases(Model):
         table_name = 'all_cases'
 
 
-@app.errorhandler(404)
-def _404(e):
-    render_template("not_found.html")
+
 
 @app.route("/")
 def index():
@@ -67,17 +65,6 @@ def index():
     top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
     type_table = Doctor.select(Doctor.doctor_type, fn.COUNT(Doctor.doctor_type).alias('count')).group_by(Doctor.doctor_type)
     return render_template(template, top_five = top_five, type_table = type_table)
-
-'''# Route for search form submission
-@app.route("/redirect", methods=['POST'])
-def search():
-    # Get search term from form
-    search_term = request.form.get('search_term')
-    # Search for vendors containing the search term in payee name and order by amount
-    search_result = Doctor.select().where(Doctor.clean_name.contains(search_term) | Doctor.license_num.contains(search_term))
-    slug = search_result[0].clean_name
-    # Redirect to jurisdiction page with slug parameter
-    return redirect(url_for("detail", slug=slug))'''
 
 @app.route("/searchdocs", methods=['POST'])
 def searchdocs():
@@ -109,9 +96,9 @@ def detail(slug):
     doctor = Doctor.get(Doctor.clean_name==slug)
     doctor_id = doctor.id
     alerts = Alert.select().where(Alert.doctor_info_id==doctor_id)
-    cases = Cases.select().where(Cases.alert_id.in_(alerts))
+    cases = Cases.select(Cases.case_num).where(Cases.alert_id.in_(alerts)).distinct()
     top_record = alerts[0]
-    return render_template("doctor.html", doctor = doctor, cases = cases, top_record = top_record)
+    return render_template("doctor.html", doctor = doctor, cases = cases, top_record = top_record, alerts = alerts)
 
 @app.route('/type/<slug>')
 def type(slug):
@@ -126,10 +113,14 @@ def type(slug):
                            countd = count_doc, counta = count_alerts, countc = count_cases, c1 = c1)
 
 # Route for search form submission
-@app.route("/dataset", methods=['POST'])
+@app.route("/dataset")
 def dataset():
     cases = Cases.select()
     return render_template("dataset.html", cases = cases)
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)

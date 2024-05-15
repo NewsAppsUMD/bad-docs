@@ -26,9 +26,9 @@
 </head>
 
 <body>
-  <div id="container" data-bs-theme="dark">
+  <div id="container">
     <!--Navbar Starts-->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -36,7 +36,7 @@
               <a class="nav-link active barsign" aria-current="page" href="/"> Main Page </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active barsign" aria-current="page" href=""> Full Dataset </a>
+                <a class="nav-link active barsign" aria-current="page" href="/dataset"> Full Dataset </a>
             </li>
             <li class="nav-item">
               <a class="nav-link active barsign" aria-current="page" href="#"> Get In Touch </a>
@@ -66,22 +66,59 @@
               Full Name: {% if top_record.first_name %}{{ top_record.first_name }}{% endif %} {% if top_record.middle_name %}{{ top_record.middle_name }}{% endif %} {% if top_record.last_name %}{{ top_record.last_name }}{% endif %} {% if top_record.suffx %}{{ top_record.suffix }}{% endif %}
               <br>
               License Number: {{ doctor.license_num }}
-              <br>
-              Cases:
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-12">
-            <div id="type_dek">
-              <ul class="list-unstyled">
-                {% for case in cases %}
-                  <li>{{ case.case_num }}</li>
-                {% endfor %}
-              </ul>
-              
+          <div class="col-md-4">
+            <div id="search_res">
+              Distinct Cases
+            </div>
+            <div id="table">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Case Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for case in cases %}
+                    <tr>
+                      <td>{{ case.case_num }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>    
+              </table>
             </div>
           </div>
+          <div class="col-md-8">
+            <div id="search_res">
+              Distinct Alerts
+            </div>
+            <div id="table">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Alert ID</th>
+                    <th>Alert Date</th>
+                    <th>Alert Information</th>
+                    <th>Alert PDF</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for alert in alerts %}
+                    <tr>
+                      <td>{{ alert.file_id }}</td>
+                      <td>{{ alert.date }}</td>
+                      <td>{{ alert.type }}</td>
+                      <td><a href={{ alert.url }}> {{ alert.url }}</a></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>    
+              </table>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
       <!--Headliner and other Header things ends-->

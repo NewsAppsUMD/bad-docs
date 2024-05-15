@@ -60,5 +60,3 @@ with open(csv_file_path, 'r', encoding='utf-8') as csvfile:
             row['license_num'] = "Document Not Found"
         # Upsert the row into the SQLite database
         db["clean_alerts"].insert(row, pk="id", replace=True)
-
-db["clean_alerts"].enable_fts(["text"], tokenize="porter", replace=True)
