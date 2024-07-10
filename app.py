@@ -54,9 +54,6 @@ class Cases(Model):
         database = db
         table_name = 'all_cases'
 
-
-
-
 @app.route("/")
 def index():
     notice_count = Doctor.select().count()
@@ -66,7 +63,7 @@ def index():
     type_table = Doctor.select(Doctor.doctor_type, fn.COUNT(Doctor.doctor_type).alias('count')).group_by(Doctor.doctor_type)
     return render_template(template, top_five = top_five, type_table = type_table)
 
-@app.route("/searchdocs", methods=['POST'])
+'''@app.route("/searchdocs", methods=['POST'])
 def searchdocs():
     # Get search term from form
     top_five = Alert.select().order_by(Alert.date.desc()).limit(5)
@@ -89,7 +86,17 @@ def searchtext():
     else:
         textresults = Text.select().where(Text.text.contains(search_term))
         alerts = Alert.select().where(Alert.text_id.in_(textresults))
-    return render_template('index.html', resultst=alerts, search_term=search_term, top_five = top_five, type_table = type_table)
+    return render_template('index.html', resultst=alerts, search_term=search_term, top_five = top_five, type_table = type_table)'''
+
+@app.route("/searchdocs")
+def searchdocs():
+    results = "No results"
+    return results
+
+@app.route("/searchtext")
+def searchtext():
+    results = "No results"
+    return results
 
 @app.route('/doctor/<slug>')
 def detail(slug):
