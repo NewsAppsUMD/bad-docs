@@ -13,10 +13,10 @@ def type():
         yield {'slug': doctor.doctor_type}
 
 def dataset():
-    yield '/dataset.html'
+    yield '/dataset'
 
 def contact():
-    yield '/contact.html'
+    yield '/contact'
 
 
 if __name__ == '__main__':
