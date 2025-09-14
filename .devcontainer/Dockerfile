@@ -1,36 +1,19 @@
-# Pre-built Dev Container Image for R. More info: https://github.com/rocker-org/devcontainer-images/pkgs/container/devcontainer%2Ftidyverse
-# Available R version: 4, 4.1, 4.0
-ARG VARIANT="4.2"
-FROM ghcr.io/rocker-org/devcontainer/tidyverse:${VARIANT}
+FROM mcr.microsoft.com/devcontainers/python:0-3.12
 
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y poppler-utils && apt-get install -y tesseract-ocr
-RUN apt-get install -y libtesseract-dev
+# keep apt lists small and install required system packages
+RUN apt-get update \
+        && apt-get install -y --no-install-recommends \
+             poppler-utils \
+             tesseract-ocr \
+             libtesseract-dev \
+             sqlite3 \
+             libsqlite3-dev \
+        && rm -rf /var/lib/apt/lists/*
 
-RUN install2.r --error --skipinstalled -n -1 \
-        statip \
-        patchwork \
-        paletteer \
-        here \
-        doParallel \
-        janitor \
-        vip \
-        ranger \
-        palmerpenguins \
-        skimr \
-        nnet \
-        kernlab \
-        plotly \
-        factoextra \
-        cluster \
-        tidymodels \
-        markdown \
-        ottr \
-    && rm -rf /tmp/downloaded_packages \
-    && R -q -e 'remotes::install_github("https://github.com/dcomtois/summarytools/tree/0-8-9")'
-
-# Install Python packages
-COPY requirements.txt /tmp/pip-tmp/
-RUN python3 -m pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt
-RUN apt-get update && apt-get install -y sqlite3 libsqlite3-dev && rm -rf /var/lib/apt/lists/*
+# Copy and install Python dependencies (if provided)
+COPY requirements.txt /tmp/pip-tmp/requirements.txt
+RUN if [ -f /tmp/pip-tmp/requirements.txt ]; then \
+            python3 -m pip --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt; \
+        fi \
+        && rm -rf /tmp/pip-tmp
 

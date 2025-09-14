@@ -72,7 +72,7 @@
         <div class="row">
           <div class="col-md-4">
             <div id="search_res">
-              Distinct Cases
+              Cases
             </div>
             <div id="table">
               <table class="table table-bordered">
@@ -93,7 +93,7 @@
           </div>
           <div class="col-md-8">
             <div id="search_res">
-              Distinct Alerts
+              Alerts
             </div>
             <div id="table">
               <table class="table table-bordered">
@@ -119,6 +119,60 @@
             </div>
           </div>
         </div>
+        
+        <!-- Document Summaries Section -->
+        {% if summaries %}
+        <div class="row mt-4">
+          <div class="col-12">
+            <div id="search_res">
+              Document Summaries
+            </div>
+            <div class="row">
+              {% for item in summaries %}
+              <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h6 class="card-title">{{ item.json_doc.respondent }}</h6>
+                    <p class="card-text">
+                      <small class="text-muted">
+                        <i class="bi bi-calendar"></i> {{ item.alert.date }}
+                        <br><i class="bi bi-exclamation-circle"></i> {{ item.alert.type }}
+                      </small>
+                    </p>
+                    <p class="card-text">{{ item.json_doc.summary }}</p>
+                    
+                    {% if item.json_doc.keywords %}
+                    <div class="mt-2">
+                      <small class="text-muted">Keywords:</small>
+                      {% for keyword in item.json_doc.keywords.split(',')[:3] %}
+                        <span class="badge bg-secondary text-white me-1">{{ keyword.strip() }}</span>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mt-3 d-flex gap-2">
+                      <a href="{{ item.pdf_url }}" class="btn btn-primary btn-sm" target="_blank">
+                        <i class="bi bi-file-earmark-pdf"></i> View PDF
+                      </a>
+                      <a href="/document/{{ item.json_doc.filename }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-info-circle"></i> Details
+                      </a>
+                      <form action="/similarity_search_results" method="post" class="d-inline">
+                        <input type="hidden" name="query" value="{{ item.json_doc.summary }}">
+                        <button type="submit" class="btn btn-success btn-sm">
+                          <i class="bi bi-magic"></i> Similar
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        
         </div>
       </div>
       <!--Headliner and other Header things ends-->

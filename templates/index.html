@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title> In Violation: Disciplinary Alerts against Maryland Physicians </title>
+  <title>MD Medical Discipline Watch</title>
   <meta name="description" content="Merrill College of Journalism, UMD">
-  <meta name="author" content="Khushboo Rathore">
+  <meta name="author" content="Khushboo Rathore and Derek Willis">
 
   <!-- Bootstrap CSS and JavaScript -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,13 +32,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active barsign" aria-current="page" href="/"> Main Page </a>
+              <a class="nav-link active barsign" aria-current="page" href="/"> Home </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active barsign" aria-current="page" href="/dataset"> Full Dataset </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active barsign" aria-current="page" href="/contact"> Get In Touch </a>
+                <a class="nav-link active barsign" aria-current="page" href="/dataset"> All Cases </a>
             </li>
           </ul>
         </div>
@@ -47,157 +44,360 @@
     <!--Navbar end-->
 
     <div id="content">
+      <!-- Header Section -->
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-12">
           <div id="headline">
-            In Violation
+            Maryland Medical Discipline Watch
           </div>
         </div>
       </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div id="dek">
-              Disciplinary actions against Maryland physicians
-            </div>
+      <div class="row">
+        <div class="col-12">
+          <div id="dek">
+            Using AI to find stories in state regulation of doctors<br />
+            Derek Willis, Philip Merrill College of Journalism
           </div>
         </div>
-
-        <div class="row">
-          <div class="col-md-5">
-            <div id="story">
-            Search by Doctor Name/License Number
-            </div>
-          </div>
-
-          <div class="col-md-1">
-          </div>
-
-          <div class="col-md-5">
-            <div id="story_offset">
-            Search Case File Text (ex: assault, suspended)
-            </div>
-          </div>
-
-        <!--<div class="row">
-          <div class="col-md-5">
-            <form class="form-inline" action="{{ url_for('searchdocs') }}" method="post">
-              <div class="form-group">
-                <input type="text" name="search_term" class="form-control" placeholder="Search by Doctor Name or License Number">
-              </div>
-              <button type="submit" class="btn btn-primary">Search</button>
-            </form>
-          </div>
-
-          <div class="col-md-1">
-          </div>
-          
-
-          <div class="col-md-5">
-            <form class="form-inline" action="{{ url_for('searchtext') }}" method="post">
-              <div class="form-group">
-                <input type="text" name="search_term" class="form-control" placeholder="Search Case File Text">
-              </div>
-              <button type="submit" class="btn btn-primary">Search</button>
-            </form>
-          </div>
-        </div>
-
-        <div class="row">
-          {% if resultsd %}
-          <div id="search_res"> Search Results for "{{ search_term }}" </div>
-          <div id="table">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>Doctor Name</th>
-                <th>Doctor Type</th>
-                <th>License Number</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for record in resultsd %}
-                <tr>
-                  <td><a href={{ url_for('detail', slug=record.clean_name) }}>{{ record.clean_name }}</a></td>
-                  <td>{{ record.doctor_type }}</td>
-                  <td>{{ record.license_num }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </div>      
-          </table>
-          {% elif search_term == "" %}
-          {% elif resultsd == "No doctor results found" %}
-          <div id="search"> No Results found for {{ search_term }} </div>
-        {% endif %}
       </div>
 
+      <!-- Search Section -->
+      <div class="row section-spacing">
+        <div class="col-12">
+          <h3 class="mb-3">Search</h3>
+        </div>
+      </div>
       <div class="row">
-        {% if resultst %}
-        <div id="search_res"> Search Results for "{{ search_term }}" </div>
-        <div id="table">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Doctor Name</th>
-              <th>Doctor Type</th>
-              <th>License Number</th>
-              <th>Filing Date</th>
-              <th>PDF Link</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for record in resultst %}
-              <tr>
-                <td><a href={{ url_for('detail', slug=record.doctor_info_id.clean_name) }}>{{ record.doctor_info_id.clean_name }}</a></td>
-                <td>{{ record.doctor_info_id.doctor_type }}</td>
-                <td>{{ record.doctor_info_id.license_num }}</td>
-                <td>{{ record.date }}</td>
-                <td><a href={{ record.url }}> {{ record.file_id }}</a></td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </div>      
-        </table>
-        {% elif search_term == "" %}
-        {% elif resultst == "No text results found" %}
-        <div id="search"> No Results found for {{ search_term }} </div>
-        {% endif %}
-      </div> -->
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-person-search"></i> Search Doctors
+              </h5>
+              <p class="card-text">Find doctors by name or license number</p>
+              <a href="/search" class="btn btn-primary">
+                <i class="bi bi-search"></i> Doctor Search
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-file-text-search"></i> Search Documents
+              </h5>
+              <p class="card-text">Search through case file text and summaries</p>
+              <a href="/search" class="btn btn-primary">
+                <i class="bi bi-search"></i> Document Search
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-magic"></i> AI Similarity Search
+              </h5>
+              <p class="card-text">Find similar cases using AI-powered semantic search</p>
+              <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#similarityModal">
+                <i class="bi bi-robot"></i> AI Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <!-- Most Recent Documents Section -->
+      {% if recent_docs %}
+      <div class="row section-spacing">
+        <div class="col-12">
+          <h3 class="mb-3">Most Recent Documents</h3>
+        </div>
+      </div>
       <div class="row">
+        {% for item in recent_docs %}
+        <div class="col-md-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.json_doc.respondent }}</h5>
+              <p class="card-text">
+                <small class="text-muted">
+                  {% if item.alert %}
+                  <i class="bi bi-calendar"></i> {{ item.alert.date }}
+                  <br><i class="bi bi-exclamation-circle"></i> {{ item.alert.type }}
+                  {% else %}
+                  <i class="bi bi-calendar"></i> {{ item.json_doc.date }}
+                  {% endif %}
+                </small>
+              </p>
+              <p class="card-text">{{ item.json_doc.summary }}</p>
+              <div class="d-flex gap-2">
+                <a href="https://www.mbp.state.md.us/BPQAPP/orders/{{ item.json_doc.filename.replace('.txt', '') }}.pdf" class="btn btn-primary btn-sm" target="_blank">
+                  <i class="bi bi-file-earmark-pdf"></i> View PDF
+                </a>
+                <form action="/similarity_search_results" method="post" class="d-inline">
+                  <input type="hidden" name="query" value="{{ item.json_doc.summary }}">
+                  <button type="submit" class="btn btn-success btn-sm">
+                    <i class="bi bi-magic"></i> Find Similar
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="row section-spacing">
         {% if top_five %}
-        <div id="search_res"> Most recent alerts </div>
-          {% for alert in top_five %}
-            <a href={{ alert.url }}>{{ alert.date_str }}: {{ alert.first_name }} {{ alert.last_name }} - {{ alert.type }}</a> 
-            <br>
-          {% endfor %}
-        {% endif %}
-      </div>    
-      
-      <div class="row col-md-6">
-        <div id="search_res">
-          Doctors by Type
+        <div class="col-12">
+          <h3 class="mb-3">Most Recent Alerts</h3>
+          <div class="list-group">
+            {% for alert in top_five %}
+            <a href="{{ alert.url }}" class="list-group-item list-group-item-action" target="_blank">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">{{ alert.first_name }} {{ alert.last_name }}</h6>
+                <small>{{ alert.date_str }}</small>
+              </div>
+              <p class="mb-1">{{ alert.type }}</p>
+            </a>
+            {% endfor %}
+          </div>
         </div>
-        <div id="table">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>Doctor Type</th>
-                <th>Number of Doctors</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for type in type_table %}
-                <tr>
-                  <td><a href={{ url_for('type', slug=type.doctor_type) }}>{{ type.doctor_type }}</a></td>
-                  <td>{{ type.count }}</td>
-                </tr>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- Top Keywords Section -->
+      {% if top_keywords %}
+      <div class="row section-spacing">
+        <div class="col-12">
+          <h3 class="mb-3">Top Keywords</h3>
+          <div class="keywords-container">
+            <div class="d-flex flex-wrap">
+              {% for keyword, count in top_keywords %}
+                <a href="/keyword/{{ keyword }}" class="badge bg-secondary text-decoration-none me-2 mb-2 p-2">
+                  {{ keyword }} <span class="badge bg-light text-dark">{{ count }}</span>
+                </a>
               {% endfor %}
-            </tbody>    
-          </table>
+            </div>
+            <div class="mt-3">
+              <a href="/keywords" class="btn btn-outline-primary">
+                <i class="bi bi-tags"></i> Browse All Keywords
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Similarity Search Modal -->
+      <div class="modal fade" id="similarityModal" tabindex="-1" aria-labelledby="similarityModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="similarityModalLabel">
+                <i class="bi bi-magic"></i> AI-Powered Similarity Search
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="similarityForm">
+                <div class="mb-3">
+                  <label for="similarityQuery" class="form-label">
+                    Describe what you're looking for (e.g., "sexual misconduct", "prescription fraud", "substance abuse")
+                  </label>
+                  <textarea class="form-control" id="similarityQuery" rows="3" 
+                            placeholder="Enter a description of the type of case you're looking for..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">
+                  <i class="bi bi-search"></i> Find Similar Cases
+                </button>
+              </form>
+              
+              <div id="similarityResults" class="mt-4" style="display: none;">
+                <h6>Search Results:</h6>
+                <div id="resultsContainer"></div>
+              </div>
+              
+              <div id="similarityLoading" class="text-center mt-4" style="display: none;">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Searching...</span>
+                </div>
+                <p class="mt-2">Finding similar cases...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctors by Type Section -->
+      <div class="row section-spacing">
+        <div class="col-12">
+          <h3 class="mb-3">Doctors by Type</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">
+                    <i class="bi bi-person-badge"></i> Doctor Type
+                  </th>
+                  <th scope="col">
+                    <i class="bi bi-hash"></i> Number of Doctors
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for type in type_table %}
+                  <tr>
+                    <td>
+                      <a href="{{ url_for('type', slug=type.doctor_type) }}" class="text-decoration-none">
+                        {{ type.doctor_type }}
+                      </a>
+                    </td>
+                    <td>
+                      <span class="badge bg-primary">{{ type.count }}</span>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>    
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">
+                <i class="bi bi-info-circle"></i> About This Data
+              </h5>
+              <p class="card-text">
+                This database contains disciplinary actions against Maryland physicians. 
+                Click on any doctor type to see all doctors of that category.
+              </p>
+              <a href="/dataset" class="btn btn-outline-info">
+                <i class="bi bi-table"></i> View Full Dataset
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Similarity Search Modal -->
+  <div class="modal fade" id="similarityModal" tabindex="-1" aria-labelledby="similarityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="similarityModalLabel">
+            <i class="bi bi-magic"></i> AI-Powered Similarity Search
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="similarityForm">
+            <div class="mb-3">
+              <label for="similarityQuery" class="form-label">
+                Describe what you're looking for (e.g., "sexual misconduct", "prescription fraud", "substance abuse")
+              </label>
+              <textarea class="form-control" id="similarityQuery" rows="3" 
+                        placeholder="Enter a description of the type of case you're looking for..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">
+              <i class="bi bi-search"></i> Find Similar Cases
+            </button>
+          </form>
+          
+          <div id="similarityResults" class="mt-4" style="display: none;">
+            <h6>Search Results:</h6>
+            <div id="resultsContainer"></div>
+          </div>
+          
+          <div id="similarityLoading" class="text-center mt-4" style="display: none;">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Searching...</span>
+            </div>
+            <p class="mt-2">Finding similar cases...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Similarity Search JavaScript -->
+  <script>
+    document.getElementById('similarityForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const query = document.getElementById('similarityQuery').value.trim();
+      if (!query) {
+        alert('Please enter a search query');
+        return;
+      }
+      
+      // Show loading spinner
+      document.getElementById('similarityLoading').style.display = 'block';
+      document.getElementById('similarityResults').style.display = 'none';
+      
+      // Create form data
+      const formData = new FormData();
+      formData.append('query', query);
+      
+      // Make the request
+      fetch('/similarity_search', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('similarityLoading').style.display = 'none';
+        
+        if (data.error) {
+          alert('Search error: ' + data.error);
+          return;
+        }
+        
+        // Display results
+        const resultsContainer = document.getElementById('resultsContainer');
+        resultsContainer.innerHTML = '';
+        
+        if (data.results.length === 0) {
+          resultsContainer.innerHTML = '<p class="text-muted">No similar cases found.</p>';
+        } else {
+          data.results.forEach(result => {
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'border rounded p-3 mb-3';
+            resultDiv.innerHTML = `
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                  <h6 class="mb-1">${result.respondent}</h6>
+                  <small class="text-muted">${result.date} | Similarity: ${(result.similarity * 100).toFixed(1)}%</small>
+                  <p class="mt-2 mb-2">${result.summary}</p>
+                </div>
+                <a href="${result.pdf_url}" target="_blank" class="btn btn-sm btn-primary ms-2">
+                  <i class="bi bi-file-earmark-pdf"></i> PDF
+                </a>
+              </div>
+            `;
+            resultsContainer.appendChild(resultDiv);
+          });
+        }
+        
+        document.getElementById('similarityResults').style.display = 'block';
+      })
+      .catch(error => {
+        document.getElementById('similarityLoading').style.display = 'none';
+        console.error('Error:', error);
+        alert('An error occurred during search');
+      });
+    });
+  </script>
+  
   </body>
 </html>

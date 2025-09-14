@@ -1,5 +1,4 @@
 import csv
-import sqlite_utils
 from pathlib import Path
 from datetime import datetime
 import re

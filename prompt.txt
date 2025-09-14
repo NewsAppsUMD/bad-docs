@@ -1,0 +1,29 @@
+You are tasked with extracting key information from a medical board disciplinary document and formatting it as a JSON object. Please analyze the provided document and extract the following information:
+
+Extract the following details and format them as a valid JSON object:
+
+1. **respondent**: The full name and credentials of the person subject to disciplinary action
+2. **license_number**: The professional license number 
+3. **date**: The date of the consent order or disciplinary action (use the latest relevant date mentioned)
+4. **summary**: A brief 2-3 sentence summary of what happened, including the main allegations and the disciplinary actions taken
+5. **keywords**: A list of exactly 5 keywords that best describe the document content (focus on the type of violation, profession, and key issues)
+
+## Output Format:
+Return only a valid JSON object with no additional text or explanation:
+
+{
+  "respondent": "Full Name with Credentials",
+  "license_number": "License Number",
+  "date": "YYYY-MM-DD",
+  "summary": "Brief summary of allegations and actions taken",
+  "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"]
+}
+
+## Guidelines:
+- For the summary, focus on the main violations/charges and the primary disciplinary action (suspension, revocation, etc.)
+- Keywords should be specific and relevant (e.g., "alcohol", "suspension", "athletic trainer", etc.)
+- Use the most recent date mentioned in the document for official actions
+- Keep the summary concise but informative
+- Ensure all JSON syntax is correct
+
+Now please analyze the following document and extract the required information:

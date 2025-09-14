@@ -1,0 +1,18 @@
+[project]
+name = "rathore-finalproj-baddocs"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bs4>=0.0.2",
+    "csvkit>=2.1.0",
+    "flask>=3.1.2",
+    "llm>=0.27.1",
+    "numpy>=2.3.3",
+    "pandas>=2.3.2",
+    "pdf2image-cli>=1.0.0",
+    "peewee>=3.18.2",
+    "requests>=2.32.5",
+    "sqlite-utils>=3.38",
+]

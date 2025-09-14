@@ -1,9 +1,10 @@
 #!/bin/bash
 
-sqlite-utils drop-table bad_docs.db clean_alerts
-sqlite-utils drop-table bad_docs.db text
-sqlite-utils drop-table bad_docs.db doctor_info
-sqlite-utils drop-table bad_docs.db all_cases
+uv run sqlite-utils drop-table bad_docs.db clean_alerts
+uv run sqlite-utils drop-table bad_docs.db text
+uv run sqlite-utils drop-table bad_docs.db doctor_info
+uv run sqlite-utils drop-table bad_docs.db all_cases
+uv run sqlite-utils drop-table bad_docs.db document_json
 
 # Database file
 DB_FILE="bad_docs.db"
@@ -40,7 +41,7 @@ sqlite3 "$DB_FILE" "$SQL"
 
 echo "Table created successfully."
 
-python3 repop_db.py
+uv run python repop_db.py
 
 echo "Table populated successfully."
 
@@ -58,14 +59,16 @@ DROP TABLE all_cases_new;
 COMMIT;
 PRAGMA foreign_keys = ON;"
 
-sqlite-utils extract bad_docs.db clean_alerts filename text --table text
+uv run sqlite-utils extract bad_docs.db clean_alerts filename text --table text
 
 #sqlite-utils extract 
 #sqlite-utils transform bad_docs.db text --rename id text_id
 
 echo "Text table created"
 
-sqlite-utils extract bad_docs.db clean_alerts clean_name doctor_type license_num --table doctor_info
+uv run sqlite-utils extract bad_docs.db clean_alerts clean_name doctor_type license_num --table doctor_info
 
 echo "Doctor table created"
+
+uv run python populate_json.py --stats
 

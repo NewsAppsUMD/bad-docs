@@ -15,7 +15,7 @@ for pdf_file in "$pdf_directory"/*.pdf; do
     # Check if there are no images for the current PDF file in the images directory
     if [ ! -f "$image_directory/${filename}_0.png" ]; then
         # Convert PDF to images (PNG format)
-        pdf2image --output "$image_directory" --image_type png "$pdf_file"
+        uv run pdf2image --output "$image_directory" --image_type png "$pdf_file"
         echo "$filename converted"
     fi
 done

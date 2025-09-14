@@ -9,8 +9,104 @@
 }
 
 #content {
-    margin-top: 30px;
+    margin-top: 70px;
     font-family: 'Roboto', 'Arial', sans-serif;
+}
+
+/* Enhanced modular styling for index page */
+.section-spacing {
+    margin-top: 1rem;
+}
+
+.card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.badge:hover {
+    transform: scale(1.05);
+}
+
+.list-group-item {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+h3 {
+    color: #152238;
+    font-family: "Hind Silliguri", sans-serif;
+    font-weight: 700;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+.table-responsive {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table th {
+    background-color: #152238;
+    color: white;
+    font-family: "Hind Silliguri", sans-serif;
+    font-weight: 600;
+    border: none;
+}
+
+.table td {
+    vertical-align: middle;
+    border-color: #e9ecef;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(21, 34, 56, 0.05);
+}
+
+.btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Make buttons in card button groups the same size */
+.card .d-flex.gap-2 .btn-sm {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.5 !important;
+    height: 31px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Constrain keywords section width on large screens */
+.keywords-container {
+    max-width: 800px;
+}
+
+@media (min-width: 1400px) {
+    .keywords-container {
+        max-width: 700px;
+    }
 }
 
 #table {
@@ -55,14 +151,13 @@ th {
 
 #headline {
     font-family: 'DM Serif Display', serif;
-    font-size: 10em;
+    font-size: 4em;
     color: #152238;
     text-transform: UPPERCASE;
     text-align: left;
     width: 100%;
-    /*padding-top: 0px;*/
     margin: 0 auto;
-    margin-bottom: -50px;
+    margin-bottom: 5px;
 }
 
 #type_head {
@@ -80,12 +175,12 @@ th {
 #dek {
     font-family: 'DM Serif Display', serif;
     text-transform: capitalize;
-    font-size: 3.5em;
+    font-size: 1.8em;
     color: black;
     text-align: left;
     margin: 0 auto;
     margin-left: 0;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
 }
 
 #type_dek {
@@ -214,19 +309,19 @@ a {
 
 @media only screen and (min-width: 1530px){
     #headline {
-        font-size: 9em;
+        font-size: 4.5em;
     }
     #dek {
-        font-size: 4em;
+        font-size: 2em;
     }
 }
 
 @media only screen and (max-width: 1205px){
     #headline {
-        font-size: 6em;
+        font-size: 3.5em;
     }
     #dek {
-        font-size: 2.5em;
+        font-size: 1.5em;
     }
     .bgimage {
         max-height: 500px;
@@ -235,10 +330,10 @@ a {
 
 @media only screen and (max-width: 770px){
     #headline {
-        font-size: 5em;
+        font-size: 3em;
     }
     #dek {
-        font-size: 2em;
+        font-size: 1.3em;
     }
     #sidepho{
         width: 100%
@@ -247,16 +342,16 @@ a {
 
 @media only screen and (max-width: 520px){
     #headline {
-        font-size: 4em;
+        font-size: 2.5em;
     }
     #dek {
-        font-size: 1.5em;
+        font-size: 1.1em;
     }
 }
 
 @media only screen and (max-width: 440px){
     #headline {
-        font-size: 3em;
+        font-size: 2em;
     }
     #dek {
         font-size: 1em;
@@ -269,10 +364,10 @@ a {
 
 @media only screen and (max-width: 400px){
     #headline {
-        font-size: 2em;
+        font-size: 1.8em;
     }
     #dek {
-        font-size: 1em;
+        font-size: 0.9em;
     }
     .bgimage {
         min-height: 0;

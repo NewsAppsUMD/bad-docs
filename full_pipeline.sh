@@ -1,22 +1,27 @@
 #!/bin/bash
-pip install csvkit
-pip install pdf2image-cli
-pip install datasette
-pip install sqlite-utils
-pip install datawrapper
-datasette install datasette-codespaces
-pip install sqlite_utils
+uv add csvkit
+uv add pdf2image-cli
+uv add datasette
+uv add sqlite-utils
+uv add datawrapper
+uv add pandas
+uv run datasette install datasette-codespaces
+uv add sqlite_utils
+uv add llm
+uv run llm install llm-gemini
+uv run llm install llm-groq
+uv run llm install llm-ollama
 
-python3 scrape.py
-Rscript license_mutations.R
+uv run python scrape.py
+uv run python license_mutations.py
 bash get_pdfs.sh
 bash images.sh
 bash ocr.sh
 bash combine_text.sh
-python3 mod_alerts.py
-Rscript data_cleaning.R
+uv run python mod_alerts.py
+uv run python data_cleaning.py
 bash database_creation.sh
-python3 app.py
+uv run python app.py
 
 
 
