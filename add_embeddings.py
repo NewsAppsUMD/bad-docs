@@ -154,8 +154,8 @@ def show_stats():
 
 def main():
     parser = argparse.ArgumentParser(description="Generate embeddings for document summaries")
-    parser.add_argument("--model", default="text-embedding-004", 
-                       help="Embedding model to use (default: text-embedding-004)")
+    parser.add_argument("--model", default="nomic-embed-text", 
+                       help="Embedding model to use (default: nomic-embed-text)")
     parser.add_argument("--force", action="store_true", 
                        help="Regenerate embeddings even if they exist")
     parser.add_argument("--list-models", action="store_true", 
