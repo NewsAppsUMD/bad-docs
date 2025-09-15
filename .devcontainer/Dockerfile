@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/python:0-3.12
+FROM mcr.microsoft.com/devcontainers/python:1-3.12
 
 # keep apt lists small and install required system packages
 RUN apt-get update \
