@@ -4,7 +4,7 @@
 import json
 from pathlib import Path
 from datetime import datetime
-from app import DocumentJSON, db
+from models import DocumentJSON, db
 
 def populate_json_data():
     """Read JSON files from json/ directory and populate DocumentJSON table."""

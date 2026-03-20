@@ -1,16 +1,33 @@
 #!/bin/bash
+set -e
 
-uv run sqlite-utils drop-table bad_docs.db clean_alerts
-uv run sqlite-utils drop-table bad_docs.db text
-uv run sqlite-utils drop-table bad_docs.db doctor_info
-uv run sqlite-utils drop-table bad_docs.db all_cases
-uv run sqlite-utils drop-table bad_docs.db document_json
-
-# Database file
 DB_FILE="bad_docs.db"
 
-# SQL command to create a table
-SQL="CREATE TABLE IF NOT EXISTS clean_alerts (
+# Parse arguments
+FULL_REBUILD=false
+for arg in "$@"; do
+    case $arg in
+        --full) FULL_REBUILD=true ;;
+    esac
+done
+
+# Core tables are cheap to rebuild (derived from CSVs)
+echo "Dropping core tables..."
+uv run sqlite-utils drop-table "$DB_FILE" clean_alerts --ignore 2>/dev/null || true
+uv run sqlite-utils drop-table "$DB_FILE" text --ignore 2>/dev/null || true
+uv run sqlite-utils drop-table "$DB_FILE" doctor_info --ignore 2>/dev/null || true
+uv run sqlite-utils drop-table "$DB_FILE" all_cases --ignore 2>/dev/null || true
+
+# Only drop document_json on full rebuild — it contains expensive embeddings
+if [ "$FULL_REBUILD" = true ]; then
+    echo "Full rebuild: dropping document_json table (embeddings will need regeneration)"
+    uv run sqlite-utils drop-table "$DB_FILE" document_json --ignore 2>/dev/null || true
+else
+    echo "Incremental: preserving document_json table (embeddings retained)"
+fi
+
+# Create tables
+sqlite3 "$DB_FILE" "CREATE TABLE IF NOT EXISTS clean_alerts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     file_id,
     url TEXT,
@@ -29,27 +46,24 @@ SQL="CREATE TABLE IF NOT EXISTS clean_alerts (
     license_num TEXT
 );"
 
-SQL="CREATE TABLE IF NOT EXISTS all_cases (
+sqlite3 "$DB_FILE" "CREATE TABLE IF NOT EXISTS all_cases (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     case_num TEXT,
     file_id TEXT,
     alert_id INTEGER
 );"
 
-# Execute the command
-sqlite3 "$DB_FILE" "$SQL"
+echo "Tables created successfully."
 
-echo "Table created successfully."
-
+# Populate from CSV and text files
 uv run python repop_db.py
+echo "Tables populated successfully."
 
-echo "Table populated successfully."
+# Link cases to alerts via file_id
+sqlite3 "$DB_FILE" "UPDATE all_cases SET alert_id = (SELECT id FROM clean_alerts WHERE clean_alerts.file_id = all_cases.file_id)"
 
-# Update 'file_id' column in 'all_cases' using data from 'clean_alerts'
-# Assuming both tables have a common identifier to link rows, e.g., `case_id`
-sqlite3 bad_docs.db "UPDATE all_cases SET alert_id = (SELECT id FROM clean_alerts WHERE clean_alerts.file_id = all_cases.file_id)"
-
-sqlite3 bad_docs.db "PRAGMA foreign_keys = OFF;
+# Add foreign key constraint to all_cases
+sqlite3 "$DB_FILE" "PRAGMA foreign_keys = OFF;
 BEGIN TRANSACTION;
 CREATE TABLE all_cases_new AS SELECT * FROM all_cases;
 DROP TABLE all_cases;
@@ -59,16 +73,13 @@ DROP TABLE all_cases_new;
 COMMIT;
 PRAGMA foreign_keys = ON;"
 
-uv run sqlite-utils extract bad_docs.db clean_alerts filename text --table text
+# Extract normalized tables
+uv run sqlite-utils extract "$DB_FILE" clean_alerts filename text --table text
+echo "Text table created."
 
-#sqlite-utils extract 
-#sqlite-utils transform bad_docs.db text --rename id text_id
+uv run sqlite-utils extract "$DB_FILE" clean_alerts clean_name doctor_type license_num --table doctor_info
+echo "Doctor table created."
 
-echo "Text table created"
-
-uv run sqlite-utils extract bad_docs.db clean_alerts clean_name doctor_type license_num --table doctor_info
-
-echo "Doctor table created"
-
+# Populate JSON summaries (skips existing records automatically)
 uv run python populate_json.py --stats
-
+echo "Database creation complete."

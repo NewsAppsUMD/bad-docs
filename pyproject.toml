@@ -1,19 +1,25 @@
 [project]
 name = "rathore-finalproj-baddocs"
 version = "0.1.0"
-description = "Add your description here"
+description = "MD Medical Discipline Watch - Maryland Board of Physicians disciplinary records tracker"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "bs4>=0.0.2",
-    "csvkit>=2.1.0",
+    "beautifulsoup4>=4.12.0",
     "flask>=3.1.2",
+    "gunicorn>=22.0.0",
     "llm>=0.27.1",
     "llm-embed-ollama>=0.1.2",
     "numpy>=2.3.3",
-    "pandas>=2.3.2",
-    "pdf2image-cli>=1.0.0",
     "peewee>=3.18.2",
     "requests>=2.32.5",
     "sqlite-utils>=3.38",
+    "git-filter-repo>=2.47.0",
+]
+
+[project.optional-dependencies]
+pipeline = [
+    "csvkit>=2.1.0",
+    "pandas>=2.3.2",
+    "pdf2image-cli>=1.0.0",
 ]

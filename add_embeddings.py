@@ -7,24 +7,7 @@ import llm
 import json
 import argparse
 from peewee import *
-from playhouse.sqlite_ext import *
-
-# Database setup
-db = SqliteExtDatabase('bad_docs.db')
-
-class DocumentJSON(Model):
-    id = AutoField(primary_key=True)
-    filename = CharField()
-    respondent = CharField()
-    license_number = CharField()
-    date = DateField()
-    summary = TextField()
-    keywords = CharField()
-    embedding = BlobField(null=True)  # Store embeddings as binary data
-    
-    class Meta:
-        database = db
-        table_name = 'document_json'
+from models import db, DocumentJSON
 
 def add_embedding_column():
     """Add embedding column if it doesn't exist"""
