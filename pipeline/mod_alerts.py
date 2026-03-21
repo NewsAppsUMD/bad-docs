@@ -1,12 +1,14 @@
 import csv
+import os
 from pathlib import Path
 from datetime import datetime
 import re
+from _paths import DATA_DIR
 
 # Path to the original alerts.csv
-csv_file_path = 'alerts.csv'
-# Path for the modified alerts.csv (can be the same as csv_file_path to overwrite)
-modified_csv_file_path = 'modified_alerts.csv'
+csv_file_path = os.path.join(DATA_DIR, 'alerts.csv')
+# Path for the modified alerts.csv
+modified_csv_file_path = os.path.join(DATA_DIR, 'modified_alerts.csv')
 
 # Function to convert date format from MM/DD/YYYY to YYYY-MM-DD
 def convert_date_format(date_str):

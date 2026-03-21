@@ -2,8 +2,9 @@ from datawrapper import Datawrapper
 import pandas as pd
 import os
 from sqlite_utils import *
+from _paths import DATA_DIR
 
-db = Database('bad_docs.db')
+db = Database(os.path.join(DATA_DIR, 'bad_docs.db'))
 
 dw=Datawrapper(os.environ.get('DATAWRAPPER_API'))
 

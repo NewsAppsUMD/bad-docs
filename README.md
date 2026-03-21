@@ -1,13 +1,135 @@
-Throughout this project, I’ve seen that data and the ways we can deal with it are unpredictable. I began this project assuming that my main page would show a full dataset, similar to some news applications that we have looked at and thinking that I would use a lot more Artificial Intelligence than I ended up working with in my final project.
+# MD Medical Discipline Watch
 
-One of the things that I wish I had more time and capacity (mental, emotional, etc) to do is make the doctor pages more detailed. In the end, I have a page that shows the significant attributes, including the case numbers, alerts, type of doctor and license number. However, I couldn’t show the status of the licenses as they weren’t clear. Additionally, the best I could do with the alerts was redirect them over to the PDF that contained more information. If I had more time, I definitely would have made summaries for each alert that details the accusations and resulting actions taken. 
+A Flask web application that scrapes, processes and serves Maryland Board of Physicians disciplinary records with AI-powered summaries and semantic similarity search.
 
-On the positive side, I was able to create functional searches from the main page for doctors and a page for the full list of alerts that would allow people to see all of the doctors and click to redirect to their pages. Additionally, I made the text searchable for the documents, meaning that a person could look up terms like “assaulted” or “circuit court” and see what reports show up. Unfortunately, the OCR is a little bit unreliable and the text search isn’t the most refined. However, there is a lot of important information that can be gleaned from these searches. I also made sure that the searches would be clear about which search was happening (doctor or text based on the URL) and would display a message if there were no alerts found.
+## What It Does
 
-Another thing that I opted out of doing was creating graphics to go on the front page. I think I wanted to do too much with this news application within the time allotted and found that displaying important information was more important than making it pretty or making it look like something that would be published by ProPublica. I was able to make it a little bit pretty and engaging to look at while keeping it relatively simple. This was similar for all the pages I created, not just the index page. I tried to maintain a similar style throughout the pages, which made my life easier and made the project look more cohesive.
+The app collects disciplinary actions taken by the Maryland Board of Physicians, runs OCR on the PDF documents, generates AI summaries and makes everything searchable:
 
-The biggest issues I ran into were with the database querying and inserting new information and tables into the database. It took me some time to figure out how to clean and insert new data without messing up the old data. I ran into an issue where I would add on data instead of overwriting it, which I solved by deleting the table before rebuilding the dataset. I also ran into issues with the connections between my tables, where the primary key on the alerts table was being set to the filename instead of the ID. I was able to work through this by using ChatGPT and sqlite-utils documentation. It allowed me to create a connection with the cases table, which was integral to running the peewee queries.
+- **Browse** alerts by doctor, doctor type, year and keywords
+- **Search** across document summaries, full text and extracted keywords
+- **Semantic similarity search** — find documents similar to a query using vector embeddings
+- **AI-generated summaries** of each disciplinary document with extracted keywords
+- **Direct links** to original PDF documents from the state
 
-The entire project can be deployed within codespaces and could probably be frozen and then redeployed or updated. I don't have strong opinions on how this needs to be maintained, but would recommend doing something that will either check when new records come in and update the system based on that or run periodically. All the data is stored in codespaces, which may become a problem. I think the best way to deal with this is to preserve the text documents in the codespace and delete the intermediary image files after they are processed. The PDFs are good to keep because we don’t know if they will be removed by the state or not. Users can see a snippet of the full dataset and have the option to contact me or access the github repository if they want to access the full database.
+## Project Structure
 
-There isn’t a significant point where I would say this app has to die. I think it all depends on how the state develops their system and what kinds of stories come out of this data (if any). The data should outlive the app, likely stored in a datasette or github repository that continually pulls through GitHub Actions. Overall, I’m happy with the product that I have created. It does what I want it to and, more importantly, what I need it to. There is a lot I could have added, but I’ve done enough to create a useful product.
+```
+.
+├── app.py                  # Flask application
+├── models.py               # Peewee ORM models (shared across app + pipeline)
+├── freeze.py               # Static site generator
+├── templates/              # Jinja2 templates (12 pages)
+├── static/                 # CSS + htmx.min.js
+├── pipeline/               # Data processing scripts
+│   ├── full_pipeline.sh    # 10-step orchestrator
+│   ├── scrape.py           # Scrapes MD Board of Physicians website
+│   ├── get_pdfs.sh         # Downloads PDF documents
+│   ├── images.sh           # PDF → image conversion (for OCR)
+│   ├── ocr.sh              # Tesseract OCR
+│   ├── combine_text.sh     # Merges multi-page OCR output
+│   ├── mod_alerts.py       # Alert data cleaning
+│   ├── data_cleaning.py    # Name/type extraction
+│   ├── license_mutations.py # File ID fixes
+│   ├── database_creation.sh # SQLite table creation + population
+│   ├── repop_db.py         # DB population helpers
+│   ├── populate_json.py    # Loads JSON summaries into DB
+│   ├── generate_json_from_combined.py  # AI summary generation (Ollama)
+│   ├── add_embeddings.py   # Embedding generation (Ollama)
+│   ├── graph_making.py     # Datawrapper chart generation
+│   ├── prompt.txt          # LLM prompt for document extraction
+│   └── _paths.py           # Shared path constants
+├── data/                   # All generated data (gitignored)
+│   ├── bad_docs.db         # SQLite database
+│   ├── pdfs/               # Downloaded PDFs
+│   ├── images/             # PDF page images
+│   ├── text/               # Raw OCR output
+│   ├── combined_text/      # Merged OCR text per document
+│   └── json/               # AI-generated JSON summaries
+├── .devcontainer/          # Dev container config (tesseract, poppler)
+├── pyproject.toml          # Dependencies (managed with uv)
+├── Procfile                # gunicorn deployment
+└── .env.example            # Environment variable template
+```
+
+## Requirements
+
+- **Python 3.12+**
+- **[uv](https://docs.astral.sh/uv/)** — package manager
+- **[Ollama](https://ollama.ai)** — local LLM runtime (for summaries + embeddings)
+- **Tesseract OCR** and **Poppler** — for PDF processing (included in devcontainer)
+
+## Setup
+
+### 1. Install dependencies
+
+```bash
+uv sync                      # runtime deps
+uv sync --extra pipeline     # + pipeline deps (pandas, pdf2image, llm-ollama)
+```
+
+### 2. Pull Ollama models
+
+```bash
+ollama pull qwen3.5:9b        # JSON summary generation
+ollama pull nomic-embed-text   # embeddings for similarity search
+```
+
+### 3. Run the pipeline
+
+```bash
+bash pipeline/full_pipeline.sh          # incremental update
+bash pipeline/full_pipeline.sh --full   # full rebuild from scratch
+```
+
+The pipeline is **incremental by default** — it skips already-downloaded PDFs, already-OCR'd files, existing JSON summaries and documents that already have embeddings. A full rebuild re-processes everything except embeddings (use `--full` to also regenerate those).
+
+### 4. Start the app
+
+```bash
+uv run python app.py                              # development
+uv run gunicorn app:app                            # production
+```
+
+The app runs on port 5000.
+
+## The Pipeline
+
+The `full_pipeline.sh` script runs 10 steps:
+
+| Step | Script | What it does |
+|------|--------|-------------|
+| 1 | `scrape.py` | Scrapes alert metadata from MD Board of Physicians |
+| 2 | `license_mutations.py` | Fixes file ID inconsistencies |
+| 3 | `get_pdfs.sh` | Downloads PDF documents |
+| 4 | `images.sh` | Converts PDFs to images for OCR |
+| 5 | `ocr.sh` | Runs Tesseract OCR on images |
+| 6 | `combine_text.sh` | Merges multi-page OCR output per document |
+| 7 | `mod_alerts.py` + `data_cleaning.py` | Cleans and reformats alert data |
+| 8 | `database_creation.sh` | Creates/populates the SQLite database |
+| 9 | `generate_json_from_combined.py` | Generates AI summaries via Ollama (qwen3.5:9b) |
+| 10 | `add_embeddings.py` | Generates vector embeddings via Ollama (nomic-embed-text) |
+
+## Database
+
+The SQLite database (`data/bad_docs.db`) has five tables:
+
+- **doctor_info** — doctor names, types and license numbers
+- **clean_alerts** — disciplinary alerts with dates, types and links to PDFs
+- **all_cases** — case numbers associated with alerts
+- **text** — full OCR text of each document
+- **document_json** — AI-generated summaries, keywords and embedding vectors
+
+## Dev Container
+
+The `.devcontainer/` config provides a ready-to-go environment with Python 3.12, Tesseract, Poppler and SQLite3. Open the project in VS Code or GitHub Codespaces and dependencies install automatically via `uv sync`.
+
+## Tech Stack
+
+- **Flask** + **Peewee** — web framework and ORM
+- **Ollama** — local LLM runtime (qwen3.5:9b for summaries, nomic-embed-text for embeddings)
+- **Tesseract** — OCR
+- **Poppler** (pdf2image) — PDF to image conversion
+- **NumPy** — cosine similarity for semantic search
+- **htmx** — lightweight frontend interactivity
+- **uv** — Python package management

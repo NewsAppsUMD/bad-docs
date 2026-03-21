@@ -5,21 +5,22 @@ description = "MD Medical Discipline Watch - Maryland Board of Physicians discip
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "beautifulsoup4>=4.12.0",
-    "flask>=3.1.2",
+    "beautifulsoup4>=4.14.0",
+    "flask>=3.1.3",
     "gunicorn>=22.0.0",
-    "llm>=0.27.1",
-    "llm-embed-ollama>=0.1.2",
-    "numpy>=2.3.3",
-    "peewee>=3.18.2",
+    "llm>=0.29",
+    "llm-embed-ollama>=0.1.3",
+    "numpy>=2.4.3",
+    "peewee>=4.0.2",
     "requests>=2.32.5",
-    "sqlite-utils>=3.38",
+    "sqlite-utils>=3.39",
     "git-filter-repo>=2.47.0",
 ]
 
 [project.optional-dependencies]
 pipeline = [
-    "csvkit>=2.1.0",
-    "pandas>=2.3.2",
+    "csvkit>=2.2.0",
+    "llm-ollama>=0.15.1",
+    "pandas>=3.0.1",
     "pdf2image-cli>=1.0.0",
 ]

@@ -7,6 +7,9 @@ import llm
 import json
 import argparse
 from peewee import *
+from _paths import PROJECT_ROOT
+import sys
+sys.path.insert(0, PROJECT_ROOT)
 from models import db, DocumentJSON
 
 def add_embedding_column():

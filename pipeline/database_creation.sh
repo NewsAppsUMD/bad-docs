@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 
-DB_FILE="bad_docs.db"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+DATA_DIR="$(dirname "$SCRIPT_DIR")/data"
+DB_FILE="$DATA_DIR/bad_docs.db"
 
 # Parse arguments
 FULL_REBUILD=false
@@ -10,6 +12,8 @@ for arg in "$@"; do
         --full) FULL_REBUILD=true ;;
     esac
 done
+
+mkdir -p "$DATA_DIR"
 
 # Core tables are cheap to rebuild (derived from CSVs)
 echo "Dropping core tables..."
@@ -56,7 +60,7 @@ sqlite3 "$DB_FILE" "CREATE TABLE IF NOT EXISTS all_cases (
 echo "Tables created successfully."
 
 # Populate from CSV and text files
-uv run python repop_db.py
+uv run python "$SCRIPT_DIR/repop_db.py"
 echo "Tables populated successfully."
 
 # Link cases to alerts via file_id
@@ -81,5 +85,5 @@ uv run sqlite-utils extract "$DB_FILE" clean_alerts clean_name doctor_type licen
 echo "Doctor table created."
 
 # Populate JSON summaries (skips existing records automatically)
-uv run python populate_json.py --stats
+uv run python "$SCRIPT_DIR/populate_json.py" --stats
 echo "Database creation complete."

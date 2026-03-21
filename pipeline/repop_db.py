@@ -1,16 +1,18 @@
 import csv
+import os
 import sqlite_utils
 from pathlib import Path
 from datetime import datetime
 import re
+from _paths import DATA_DIR
 
 # Path to the original alerts.csv
-csv_file_path = 'clean_nametype.csv'
+csv_file_path = os.path.join(DATA_DIR, 'clean_nametype.csv')
 
 # Path to the directory containing the .txt files
-txt_files_directory = Path('combined_text')
+txt_files_directory = Path(os.path.join(DATA_DIR, 'combined_text'))
 # Path to the SQLite database
-db_path = 'bad_docs.db'
+db_path = os.path.join(DATA_DIR, 'bad_docs.db')
 
 # Create or open the SQLite database
 db = sqlite_utils.Database(db_path)

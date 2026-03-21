@@ -1,8 +1,10 @@
 import csv
+import os
 import time
 import datetime
 import requests
 from bs4 import BeautifulSoup
+from _paths import DATA_DIR
 
 list_of_rows = []
 
@@ -25,6 +27,10 @@ for year in years:
 
     soup = BeautifulSoup(html, features="html.parser")
     table = soup.find('tbody')
+
+    if table is None:
+        print(f"Warning: no table found for {year} (status {response.status_code}), skipping")
+        continue
 
     if year > 2016:
         for row in table.find_all('tr'):
@@ -55,7 +61,7 @@ for year in years:
                     list_of_cells.append(year)
             list_of_rows.append(list_of_cells)
 
-outfile = open("alerts.csv", "w")
+outfile = open(os.path.join(DATA_DIR, "alerts.csv"), "w")
 writer = csv.writer(outfile)
 # i am writing a header row
 writer.writerow(["file_id", "url", "name", "type", "date","year"])

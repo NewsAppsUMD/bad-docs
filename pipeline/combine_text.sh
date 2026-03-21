@@ -1,23 +1,26 @@
 #!/bin/bash
 
-# Define the directory containing the .txt files
-txt_directory="text"
-# Define the directory where the combined files will be saved
-combined_directory="combined_text"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+DATA_DIR="$(dirname "$SCRIPT_DIR")/data"
 
-# Create the combined directory if it doesn't exist
+txt_directory="$DATA_DIR/text"
+combined_directory="$DATA_DIR/combined_text"
+
 mkdir -p "$combined_directory"
 
-# Collect unique base names
-declare -A seen
+# Collect unique base names (compatible with bash 3.2 — no associative arrays)
+seen_file=$(mktemp)
+trap "rm -f $seen_file" EXIT
+
 for file in "$txt_directory"/*.txt; do
+    [ -f "$file" ] || continue
     base_name=$(basename "$file" | cut -d '_' -f 1)
 
     # Skip if we've already processed this base name
-    if [ "${seen[$base_name]}" ]; then
+    if grep -qx "$base_name" "$seen_file" 2>/dev/null; then
         continue
     fi
-    seen[$base_name]=1
+    echo "$base_name" >> "$seen_file"
 
     output_file="${combined_directory}/${base_name}.txt"
 
@@ -26,7 +29,6 @@ for file in "$txt_directory"/*.txt; do
     if [ ! -f "$output_file" ]; then
         needs_update=true
     else
-        # Re-combine if any source file is newer than the combined file
         for part in "${txt_directory}/${base_name}"_*.txt; do
             if [ "$part" -nt "$output_file" ]; then
                 needs_update=true

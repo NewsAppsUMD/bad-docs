@@ -8,9 +8,8 @@ Set MODEL constant below to choose the model.
 import os
 from pathlib import Path
 import json
-import time
 
-MODEL = "gemini-2.5-flash"  # change to desired model
+MODEL = "qwen3.5:9b"  # local Ollama model
 
 
 def load_prompt(prompt_path: Path) -> str:
@@ -59,7 +58,6 @@ def run_prompt_on_file(model, prompt_template: str, file_path: Path, out_dir: Pa
         out = response.text()
     except Exception as e:
         print(f"Model call failed for {file_path.name}: {e}")
-        time.sleep(2)
         return
 
     try:
@@ -68,15 +66,14 @@ def run_prompt_on_file(model, prompt_template: str, file_path: Path, out_dir: Pa
     except Exception as e:
         print(f"Failed to write {out_path}: {e}")
 
-    # polite pause to avoid rate limits
-    time.sleep(2)
 
 
 def main():
     base = Path(__file__).resolve().parent
-    combined_dir = base / "combined_text"
+    data_dir = base.parent / "data"
+    combined_dir = data_dir / "combined_text"
     prompt_path = base / "prompt.txt"
-    out_dir = base / "json"
+    out_dir = data_dir / "json"
     out_dir.mkdir(parents=True, exist_ok=True)
 
     if not prompt_path.exists():

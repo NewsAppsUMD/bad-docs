@@ -7,8 +7,10 @@ Usage:
 Reads CSV, applies specific file_id fixes, rebuilds url, trims year to first 4 chars, and writes output.
 """
 import csv
+import os
 import argparse
 from pathlib import Path
+from _paths import DATA_DIR
 
 
 FIXES = [
@@ -46,8 +48,9 @@ def process_rows(rows):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--in", dest="infile", default="alerts.csv")
-    ap.add_argument("--out", dest="outfile", default="alerts.csv")
+    default_csv = os.path.join(DATA_DIR, "alerts.csv")
+    ap.add_argument("--in", dest="infile", default=default_csv)
+    ap.add_argument("--out", dest="outfile", default=default_csv)
     args = ap.parse_args()
 
     infile = Path(args.infile)

@@ -4,18 +4,20 @@ Python version of data_cleaning.R
 Cleans up alerts data by extracting doctor types, cleaning names, and generating license numbers.
 """
 
+import os
 import pandas as pd
 import re
 import numpy as np
+from _paths import DATA_DIR
 
 def clean_alerts_data():
     """
     Clean up alerts data following the same logic as data_cleaning.R
     """
     print("Reading modified_alerts.csv...")
-    
+
     # Read the CSV file
-    alert_textfiles = pd.read_csv("modified_alerts.csv")
+    alert_textfiles = pd.read_csv(os.path.join(DATA_DIR, "modified_alerts.csv"))
     
     print(f"Loaded {len(alert_textfiles)} rows")
     
@@ -215,7 +217,7 @@ def clean_alerts_data():
     
     # Save to CSV
     print("Saving to clean_nametype.csv...")
-    anti_clean.to_csv("clean_nametype.csv", index=False)
+    anti_clean.to_csv(os.path.join(DATA_DIR, "clean_nametype.csv"), index=False)
     
     print(f"✓ Successfully created clean_nametype.csv with {len(anti_clean)} rows")
     

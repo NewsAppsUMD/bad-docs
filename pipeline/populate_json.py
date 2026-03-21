@@ -2,13 +2,17 @@
 """Populate DocumentJSON table from generated JSON files."""
 
 import json
+import os
 from pathlib import Path
 from datetime import datetime
+from _paths import DATA_DIR, PROJECT_ROOT
+import sys
+sys.path.insert(0, PROJECT_ROOT)
 from models import DocumentJSON, db
 
 def populate_json_data():
     """Read JSON files from json/ directory and populate DocumentJSON table."""
-    json_dir = Path("json")
+    json_dir = Path(os.path.join(DATA_DIR, "json"))
     
     if not json_dir.exists():
         print(f"JSON directory '{json_dir}' does not exist")
