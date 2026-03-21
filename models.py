@@ -17,6 +17,7 @@ class Doctor(BaseModel):
     clean_name = CharField()
     doctor_type = CharField()
     license_num = CharField()
+    status = CharField(null=True)
 
     class Meta:
         table_name = 'doctor_info'

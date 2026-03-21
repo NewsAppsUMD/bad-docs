@@ -1,13 +1,53 @@
 import os
+import re
 import json
 import logging
 import llm
 import numpy as np
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from peewee import fn
+from peewee import fn, OperationalError
 from models import db, Doctor, Text, Alert, Cases, DocumentJSON
 
 app = Flask(__name__)
+
+def doctor_slug(doctor):
+    """Generate a URL slug from doctor name + license number."""
+    name = re.sub(r'[^a-z0-9]+', '-', doctor.clean_name.lower()).strip('-')
+    return f"{name}-{doctor.license_num.lower()}"
+
+def doctor_slug_for_license(license_num):
+    """Look up a doctor by license number and return their URL slug, or None."""
+    try:
+        doctor = Doctor.get(Doctor.license_num == license_num)
+        return doctor_slug(doctor)
+    except Doctor.DoesNotExist:
+        # Try zero-padding numeric part (e.g. D90487 -> D0090487)
+        match = re.match(r'^([A-Za-z])(\d+)$', license_num)
+        if match:
+            padded = f"{match.group(1)}{match.group(2).zfill(7)}"
+            try:
+                doctor = Doctor.get(Doctor.license_num == padded)
+                return doctor_slug(doctor)
+            except Doctor.DoesNotExist:
+                pass
+        return None
+
+def keyword_slug(keyword):
+    """Generate a URL slug from a keyword (e.g. 'prescription fraud' -> 'prescription-fraud')."""
+    return re.sub(r'[^a-z0-9]+', '-', keyword.strip().lower()).strip('-')
+
+def keyword_unslug(slug):
+    """Convert a keyword slug back to a keyword (e.g. 'prescription-fraud' -> 'prescription fraud')."""
+    return slug.replace('-', ' ')
+
+def type_slug(doctor_type):
+    """Generate a URL slug from a doctor type (e.g. 'Doctor of Medicine' -> 'doctor-of-medicine')."""
+    return re.sub(r'[^a-z0-9]+', '-', doctor_type.strip().lower()).strip('-')
+
+app.jinja_env.globals['doctor_slug'] = doctor_slug
+app.jinja_env.globals['doctor_slug_for_license'] = doctor_slug_for_license
+app.jinja_env.globals['keyword_slug'] = keyword_slug
+app.jinja_env.globals['type_slug'] = type_slug
 logger = logging.getLogger(__name__)
 
 # Similarity search functions
@@ -56,6 +96,13 @@ def similarity_search(query_text, limit=5, exclude_filename=None):
     similarities.sort(key=lambda x: x[1], reverse=True)
     return [(doc, sim) for doc, sim in similarities[:limit]]
 
+TOPIC_CATEGORIES = {
+    'Prescribing & Drugs': ['opioids', 'controlled substances', 'prescription fraud', 'substance abuse', 'prescribing', 'drug diversion', 'controlled dangerous substances', 'medications', 'prescription'],
+    'Patient Harm': ['negligence', 'malpractice', 'patient death', 'sexual misconduct', 'incompetence', 'patient safety', 'standard of care', 'boundary violations', 'sexual abuse'],
+    'Licensing & Fraud': ['unlicensed practice', 'false credentials', 'insurance fraud', 'fraud', 'misrepresentation', 'unauthorized practice', 'false statements'],
+    'Impairment': ['alcohol', 'drug use', 'mental health', 'impairment', 'rehabilitation', 'substance use disorder'],
+}
+
 @app.route("/")
 def index():
     notice_count = Doctor.select().count()
@@ -69,34 +116,54 @@ def index():
                   .group_by(Doctor.doctor_type)
                   .order_by(fn.COUNT(Alert.id).desc()))
 
-    # New JSON-based stats
+    # Dashboard stats
+    doctor_count = Doctor.select().count()
+    alert_count = Alert.select().count()
+
+    most_common_action_row = (Alert
+                              .select(Alert.type, fn.COUNT(Alert.id).alias('cnt'))
+                              .group_by(Alert.type)
+                              .order_by(fn.COUNT(Alert.id).desc())
+                              .limit(1)
+                              .first())
+    most_common_action = most_common_action_row.type if most_common_action_row else None
+
+    most_common_type_row = (Doctor
+                            .select(Doctor.doctor_type, fn.COUNT(Doctor.id).alias('cnt'))
+                            .group_by(Doctor.doctor_type)
+                            .order_by(fn.COUNT(Doctor.id).desc())
+                            .limit(1)
+                            .first())
+    most_common_type = most_common_type_row.doctor_type if most_common_type_row else None
+
+    # Recent activity feed - use Alert as primary source (most up-to-date)
+    recent_alerts = (Alert
+                     .select(Alert, Doctor)
+                     .join(Doctor, on=(Alert.doctor_info_id == Doctor.id))
+                     .order_by(Alert.date.desc())
+                     .limit(5))
+
     recent_docs = []
+    for alert in recent_alerts:
+        # Try to find a DocumentJSON summary for this alert
+        json_doc = None
+        try:
+            text_doc = Text.get(Text.id == alert.text_id)
+            try:
+                json_doc = DocumentJSON.get(DocumentJSON.filename == text_doc.filename)
+            except DocumentJSON.DoesNotExist:
+                pass
+        except Text.DoesNotExist:
+            pass
+        recent_docs.append({
+            'alert': alert,
+            'doctor': alert.doctor_info_id,
+            'json_doc': json_doc,
+        })
+
     top_keywords = []
 
     try:
-        # Get recent documents with their corresponding alerts
-        recent_json_docs = DocumentJSON.select().order_by(DocumentJSON.date.desc()).limit(4)
-
-        for json_doc in recent_json_docs:
-            # Find corresponding text document
-            try:
-                text_doc = Text.get(Text.filename == json_doc.filename)
-                try:
-                    alert = Alert.get(Alert.text_id == text_doc.id)
-                    recent_docs.append({
-                        'json_doc': json_doc,
-                        'alert': alert
-                    })
-                except Alert.DoesNotExist:
-                    recent_docs.append({
-                        'json_doc': json_doc,
-                        'alert': None
-                    })
-            except Text.DoesNotExist:
-                recent_docs.append({
-                    'json_doc': json_doc,
-                    'alert': None
-                })
 
         # Top keywords
         all_json_docs = DocumentJSON.select()
@@ -110,13 +177,43 @@ def index():
 
         top_keywords = sorted(keyword_counts.items(), key=lambda x: x[1], reverse=True)[:10]
     except OperationalError:
+        keyword_counts = {}
         logger.warning("DocumentJSON table not available")
+
+    # Build topic categories from keyword_counts
+    topic_categories = {}
+    for category, cat_keywords in TOPIC_CATEGORIES.items():
+        matched = []
+        for kw in cat_keywords:
+            count = keyword_counts.get(kw, 0)
+            if count > 0:
+                matched.append((kw, count))
+        if matched:
+            matched.sort(key=lambda x: x[1], reverse=True)
+            topic_categories[category] = matched
 
     return render_template(template,
                          top_five=top_five,
                          type_table=type_table,
                          recent_docs=recent_docs,
-                         top_keywords=top_keywords)
+                         top_keywords=top_keywords,
+                         doctor_count=doctor_count,
+                         alert_count=alert_count,
+                         most_common_action=most_common_action,
+                         most_common_type=most_common_type,
+                         topic_categories=topic_categories)
+
+@app.route("/api/doctor_search")
+def doctor_search():
+    q = request.args.get('q', '').strip()
+    if not q:
+        return jsonify([])
+    doctors = (Doctor
+               .select(Doctor.clean_name, Doctor.doctor_type, Doctor.license_num)
+               .where(Doctor.clean_name.contains(q))
+               .limit(10))
+    results = [{'clean_name': d.clean_name, 'doctor_type': d.doctor_type, 'license_num': d.license_num, 'slug': doctor_slug(d)} for d in doctors]
+    return jsonify(results)
 
 @app.route("/similarity_search", methods=['POST'])
 def similarity_search_route():
@@ -234,9 +331,32 @@ def searchdocs():
 def searchtext():
     return redirect(url_for('search'))
 
+STATUS_COLORS = {
+    'License Permanently Revoked': 'danger',
+    'License Revoked': 'danger',
+    'License Surrendered': 'danger',
+    'Suspended': 'warning',
+    'On Probation': 'warning',
+    'Reinstated': 'success',
+    'Suspension Terminated': 'success',
+    'Reprimanded': 'info',
+    'Fined': 'info',
+}
+
 @app.route('/doctor/<slug>')
 def detail(slug):
-    doctor = Doctor.get(Doctor.clean_name==slug)
+    # Extract license number from end of slug (e.g. "joan-smith-h0048286" or "foo-unlicensed")
+    license_match = re.search(r'-([a-z]\d{7})$', slug, re.IGNORECASE)
+    if license_match:
+        license_num = license_match.group(1).upper()
+        doctor = Doctor.get(Doctor.license_num == license_num)
+    elif slug.endswith('-unlicensed'):
+        # Derive name from slug prefix
+        name_part = slug.rsplit('-unlicensed', 1)[0].replace('-', ' ').title()
+        doctor = Doctor.get((Doctor.clean_name == name_part) & (Doctor.license_num == 'Unlicensed'))
+    else:
+        # Fallback: try matching by clean_name for old-style URLs
+        doctor = Doctor.get(Doctor.clean_name == slug)
     doctor_id = doctor.id
     alerts = Alert.select().where(Alert.doctor_info_id==doctor_id).order_by(Alert.date.desc())
     cases = Cases.select(Cases.case_num).where(Cases.alert_id.in_(alerts)).distinct()
@@ -259,7 +379,10 @@ def detail(slug):
         except Text.DoesNotExist:
             pass
 
-    return render_template("doctor.html", doctor = doctor, cases = cases, top_record = top_record, alerts = alerts, summaries = summaries)
+    # Status badge from pre-computed doctor.status
+    status_color = STATUS_COLORS.get(doctor.status, 'secondary') if doctor.status else None
+
+    return render_template("doctor.html", doctor=doctor, cases=cases, top_record=top_record, alerts=alerts, summaries=summaries, status_color=status_color)
 
 @app.route('/document/<filename>')
 def document_detail(filename):
@@ -288,7 +411,16 @@ def document_detail(filename):
 
 @app.route('/type/<slug>')
 def type(slug):
-    doctors = Doctor.select().where(Doctor.doctor_type==slug)
+    # Find the doctor_type whose slug matches
+    all_types = Doctor.select(Doctor.doctor_type).distinct()
+    doctor_type = None
+    for t in all_types:
+        if type_slug(t.doctor_type) == slug:
+            doctor_type = t.doctor_type
+            break
+    if doctor_type is None:
+        return "Type not found", 404
+    doctors = Doctor.select().where(Doctor.doctor_type == doctor_type)
     count_doc = doctors.count()
     alerts = Alert.select().where(Alert.doctor_info_id.in_(doctors))
     count_alerts = alerts.count()
@@ -317,13 +449,14 @@ def browse_keywords():
     except OperationalError:
         return render_template('keywords.html', keywords=[], error="No keyword data available")
 
-@app.route('/keyword/<keyword>')
-def keyword_detail(keyword):
+@app.route('/keyword/<slug>')
+def keyword_detail(slug):
+    keyword = keyword_unslug(slug)
     try:
-        docs = DocumentJSON.select().where(DocumentJSON.keywords.contains(keyword.lower()))
-        return render_template('keyword_detail.html', keyword=keyword.lower(), documents=docs)
+        docs = DocumentJSON.select().where(DocumentJSON.keywords.contains(keyword)).order_by(DocumentJSON.date.desc())
+        return render_template('keyword_detail.html', keyword=keyword, documents=docs)
     except OperationalError:
-        return render_template('keyword_detail.html', keyword=keyword.lower(), documents=[], error="No documents found")
+        return render_template('keyword_detail.html', keyword=keyword, documents=[], error="No documents found")
 
 @app.route("/dataset")
 def dataset():

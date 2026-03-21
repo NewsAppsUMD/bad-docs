@@ -71,14 +71,19 @@ echo ""
 echo "=== Step 8/10: Building database ==="
 bash "$SCRIPT_DIR/database_creation.sh" $FULL_FLAG
 
-# 9. Generate AI summaries from documents (skips existing JSON files)
+# 9. Classify doctor statuses using LLM (skips already-classified doctors)
 echo ""
-echo "=== Step 9/10: Generating JSON summaries (requires Ollama with qwen3.5:9b) ==="
+echo "=== Step 9/11: Classifying doctor statuses (requires Ollama with qwen3.5:9b) ==="
+uv run python "$SCRIPT_DIR/classify_status.py"
+
+# 10. Generate AI summaries from documents (skips existing JSON files)
+echo ""
+echo "=== Step 10/11: Generating JSON summaries (requires Ollama with qwen3.5:9b) ==="
 uv run python "$SCRIPT_DIR/generate_json_from_combined.py"
 
-# 10. Generate embeddings for similarity search (skips docs with embeddings)
+# 11. Generate embeddings for similarity search (skips docs with embeddings)
 echo ""
-echo "=== Step 10/10: Generating embeddings (requires Ollama with nomic-embed-text) ==="
+echo "=== Step 11/11: Generating embeddings (requires Ollama with nomic-embed-text) ==="
 uv run python "$SCRIPT_DIR/add_embeddings.py"
 
 echo ""
