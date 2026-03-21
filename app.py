@@ -4,6 +4,7 @@ import logging
 import llm
 import numpy as np
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from peewee import fn
 from models import db, Doctor, Text, Alert, Cases, DocumentJSON
 
 app = Flask(__name__)
