@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %}Maryland Medical Discipline Files{% endblock %}</title>
+  <meta name="description" content="Track disciplinary actions against Maryland health professionals">
+  <meta name="author" content="Khushboo Rathore and Derek Willis">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Roboto:wght@300;400;500;700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/static/style.css">
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg site-nav fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Maryland Medical Discipline Files</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/search' %}active{% endif %}" href="/search">Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/keywords' %}active{% endif %}" href="/keywords">Topics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/dataset' %}active{% endif %}" href="/dataset">All Cases</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/contact' %}active{% endif %}" href="/contact">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="site-container">
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p>Data from the <a href="https://www.mbp.state.md.us/disciplinary.aspx" target="_blank">Maryland Board of Physicians</a></p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p>Philip Merrill College of Journalism, University of Maryland</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

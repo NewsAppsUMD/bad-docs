@@ -1,376 +1,672 @@
+/* ============================================
+   BadDocs - Maryland Medical Board Database
+   Design System Stylesheet
+   ============================================
+   Colors:
+     Primary red:    #A03033
+     Gold accent:    #D4A843
+     Off-white bg:   #F5F0E8
+     Charcoal text:  #2D2D2D
+     Secondary text: #5A5A5A
+     Navy:           #152238
+     Light border:   #E0D8CC
+     Card bg:        #FFFFFF
+   Typography:
+     Headlines:      'DM Serif Display', serif
+     Body/UI:        'Roboto', sans-serif
+     Section heads:  'Hind Siliguri', sans-serif
+   ============================================ */
 
-#container {
-    width: 98%;
-    margin: 0 auto;
+/* ----- 1. Base & Layout ----- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-.barsign {
-    font-size: 20px;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #F5F0E8;
+    color: #2D2D2D;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: #A03033;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #7a2426;
+    text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    line-height: 1.3;
+}
+
+h1, h2 {
+    font-family: 'DM Serif Display', serif;
+    color: #152238;
+}
+
+h3, h4, h5, h6 {
+    font-family: 'Hind Siliguri', sans-serif;
+    color: #152238;
+    font-weight: 700;
+}
+
+p {
+    margin-bottom: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+}
+
+.site-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
 }
 
 #content {
-    margin-top: 70px;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    margin-top: 80px;
+    font-family: 'Roboto', sans-serif;
 }
 
-/* Enhanced modular styling for index page */
-.section-spacing {
-    margin-top: 1rem;
+
+/* ----- 2. Navbar ----- */
+
+.site-nav {
+    background-color: #152238;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
+
+.site-nav .navbar-brand,
+.site-nav .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    color: #D4A843;
+    font-size: 1.4rem;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+}
+
+.site-nav .navbar-brand:hover,
+.site-nav .nav-brand:hover {
+    color: #e6be5a;
+    text-decoration: none;
+}
+
+.site-nav .nav-link,
+.site-nav a {
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.site-nav .nav-link:hover,
+.site-nav a:hover {
+    color: #D4A843;
+    text-decoration: none;
+}
+
+.site-nav .nav-link.active,
+.site-nav a.active {
+    color: #D4A843;
+    border-bottom: 2px solid #D4A843;
+}
+
+
+/* ----- 3. Hero Section ----- */
+
+.hero {
+    padding: 3.5rem 0 3rem;
+    text-align: center;
+}
+
+.hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8em;
+    color: #152238;
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1em;
+    color: #5A5A5A;
+    margin-bottom: 2rem;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-search {
+    position: relative;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.hero-search input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    border-radius: 50px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    outline: none;
+    transition: box-shadow 0.2s ease;
+}
+
+.hero-search input:focus {
+    box-shadow: 0 2px 16px rgba(212, 168, 67, 0.3);
+}
+
+.hero-search input::placeholder {
+    color: #9a9a9a;
+}
+
+.hero-search .search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    border-radius: 12px;
+    margin-top: 0.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+
+/* ----- 4. Stats Row ----- */
+
+.stats-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: #FFFFFF;
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    flex: 1;
+    border: 1px solid #E0D8CC;
+}
+
+.stat-card:nth-child(3n+1) {
+    border-left: 4px solid #A03033;
+}
+
+.stat-card:nth-child(3n+2) {
+    border-left: 4px solid #D4A843;
+}
+
+.stat-card:nth-child(3n+3) {
+    border-left: 4px solid #152238;
+}
+
+.stat-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #152238;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #5A5A5A;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+}
+
+
+/* ----- 5. Activity Feed ----- */
+
+.activity-feed {
+    margin-bottom: 2rem;
+}
+
+.activity-item {
+    border-left: 3px solid #E0D8CC;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.activity-item:hover {
+    border-color: #A03033;
+}
+
+.activity-date {
+    font-size: 0.8rem;
+    color: #5A5A5A;
+}
+
+.activity-name {
+    font-weight: 700;
+}
+
+.activity-name a {
+    color: #152238;
+}
+
+.activity-name a:hover {
+    color: #A03033;
+}
+
+.activity-action {
+    font-weight: 400;
+    color: #5A5A5A;
+}
+
+
+/* ----- 6. Topic Cards ----- */
+
+.topic-card {
+    background: #FFFFFF;
+    border: 1px solid #E0D8CC;
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: border-color 0.2s ease;
+}
+
+.topic-card:hover {
+    border-color: #D4A843;
+}
+
+.topic-card-title {
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 700;
+    color: #152238;
+    margin-bottom: 0.5rem;
+}
+
+.topic-card-count {
+    display: inline-block;
+    background: #D4A843;
+    color: #FFFFFF;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+}
+
+.topic-keyword {
+    display: inline-block;
+    font-size: 0.8rem;
+    background: #F5F0E8;
+    color: #2D2D2D;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin: 0.2rem;
+    transition: background-color 0.2s ease;
+}
+
+.topic-keyword:hover {
+    background: #E0D8CC;
+    text-decoration: none;
+}
+
+
+/* ----- 7. Cards ----- */
 
 .card {
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background: #FFFFFF;
+    border: 1px solid #E0D8CC;
+    border-radius: 10px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    border-color: #D4A843;
 }
 
-.badge {
-    font-size: 0.9rem;
-    padding: 0.5rem 0.8rem;
-    transition: all 0.2s ease-in-out;
+
+/* ----- 8. Tables ----- */
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.badge:hover {
-    transform: scale(1.05);
-}
-
-.list-group-item {
-    transition: background-color 0.2s ease-in-out;
-}
-
-.list-group-item:hover {
-    background-color: #f8f9fa;
-}
-
-h3 {
-    color: #152238;
-    font-family: "Hind Silliguri", sans-serif;
-    font-weight: 700;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 0.3rem;
-    margin-bottom: 1rem;
-}
-
-.table-responsive {
-    border-radius: 0.5rem;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.table th {
+.table thead th {
     background-color: #152238;
-    color: white;
-    font-family: "Hind Silliguri", sans-serif;
+    color: #FFFFFF;
+    font-family: 'Hind Siliguri', sans-serif;
     font-weight: 600;
     border: none;
+    padding: 0.75rem 1rem;
 }
 
 .table td {
     vertical-align: middle;
-    border-color: #e9ecef;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #E0D8CC;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(21, 34, 56, 0.05);
+    background-color: rgba(160, 48, 51, 0.05);
 }
 
+.table a {
+    color: #A03033;
+}
+
+.table a:hover {
+    text-decoration: underline;
+}
+
+.table-responsive {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+/* ----- 9. Doctor Detail Page ----- */
+
+.doctor-header {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: #152238;
+    margin-bottom: 0.5rem;
+}
+
+.doctor-meta {
+    color: #5A5A5A;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.doctor-status {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-left: 2px solid #E0D8CC;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -0.5rem;
+    top: 0.25rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #A03033;
+    border: 2px solid #FFFFFF;
+}
+
+
+/* ----- 10. Badges & Keywords ----- */
+
+.badge-keyword {
+    display: inline-block;
+    background: #F5F0E8;
+    color: #2D2D2D;
+    border: 1px solid #E0D8CC;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin: 0.15rem;
+    transition: all 0.2s ease;
+}
+
+.badge-keyword:hover {
+    background: #D4A843;
+    color: #FFFFFF;
+    border-color: #D4A843;
+    text-decoration: none;
+}
+
+.badge-keyword.active {
+    background: #A03033;
+    color: #FFFFFF;
+    border-color: #A03033;
+}
+
+
+/* ----- 11. Buttons ----- */
+
 .btn {
-    transition: all 0.2s ease-in-out;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
 }
 
 .btn:hover {
     transform: translateY(-1px);
+    text-decoration: none;
 }
 
-/* Make buttons in card button groups the same size */
-.card .d-flex.gap-2 .btn-sm {
-    padding: 0.25rem 0.5rem !important;
-    font-size: 0.875rem !important;
-    line-height: 1.5 !important;
-    height: 31px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+.btn-primary {
+    background-color: #A03033;
+    border-color: #A03033;
+    color: #FFFFFF;
 }
 
-/* Constrain keywords section width on large screens */
-.keywords-container {
-    max-width: 800px;
+.btn-primary:hover {
+    background-color: #862829;
+    border-color: #862829;
+    color: #FFFFFF;
 }
 
-@media (min-width: 1400px) {
-    .keywords-container {
-        max-width: 700px;
+.btn-secondary {
+    background-color: #152238;
+    border-color: #152238;
+    color: #FFFFFF;
+}
+
+.btn-secondary:hover {
+    background-color: #1e3250;
+    border-color: #1e3250;
+    color: #FFFFFF;
+}
+
+.btn-outline-primary {
+    background: transparent;
+    border-color: #A03033;
+    color: #A03033;
+}
+
+.btn-outline-primary:hover {
+    background-color: #A03033;
+    color: #FFFFFF;
+}
+
+.btn-gold {
+    background-color: #D4A843;
+    border-color: #D4A843;
+    color: #2D2D2D;
+}
+
+.btn-gold:hover {
+    background-color: #c4982e;
+    border-color: #c4982e;
+    color: #2D2D2D;
+}
+
+
+/* ----- 12. Search Page & Form Inputs ----- */
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+select,
+textarea {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid #E0D8CC;
+    border-radius: 6px;
+    background: #FFFFFF;
+    color: #2D2D2D;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #D4A843;
+    box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.15);
+    outline: none;
+}
+
+
+/* ----- 13. Footer ----- */
+
+.site-footer {
+    background-color: #152238;
+    color: #FFFFFF;
+    padding: 2rem 1.5rem;
+    margin-top: 3rem;
+    border-top: 3px solid #D4A843;
+}
+
+.site-footer a {
+    color: #D4A843;
+}
+
+.site-footer a:hover {
+    color: #e6be5a;
+    text-decoration: underline;
+}
+
+.site-footer p {
+    color: #cccccc;
+    font-size: 0.9rem;
+}
+
+
+/* ----- 14. Responsive ----- */
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .stats-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .site-container {
+        padding: 0 1rem;
+    }
+
+    .doctor-header {
+        font-size: 1.6rem;
+    }
+
+    .site-nav {
+        padding: 0.5rem 1rem;
     }
 }
 
-#table {
-    width: 100%;
-    margin: 0 auto;
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.6rem;
+    }
 
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .hero-search input {
+        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    h1, h2 {
+        font-size: 1.4rem;
+    }
+
+    .table thead th,
+    .table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.85rem;
+    }
 }
 
-#results {
-    width: 98%;
-    margin: 0 auto;
-    text-align: left;
+
+/* ----- 15. Utilities ----- */
+
+.section-spacing {
+    margin-top: 2rem;
 }
 
-#search_res {
-    font-family: "Hind Silliguri", sans-serif;
-    width: 100%;
-    font-size: 30px;
-    font-weight: 800;
-    margin: 0 auto;
+.text-red {
+    color: #A03033;
+}
+
+.text-gold {
+    color: #D4A843;
+}
+
+.text-navy {
     color: #152238;
 }
 
-th {
-    font-family: "Hind Silliguri", sans-serif;
-    font-weight: 700px;
-}
-
-.bgimage {
-    min-height: 700px;
-    background: url(Flag_of_Maryland.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size:cover;
-    background-attachment: fixed;
-}
-
-#datawrapper-chart-khNwL{
-    margin-top: 30px;
-    margin-bottom: 70px;
-}
-
-#headline {
-    font-family: 'DM Serif Display', serif;
-    font-size: 4em;
-    color: #152238;
-    text-transform: UPPERCASE;
-    text-align: left;
-    width: 100%;
-    margin: 0 auto;
-    margin-bottom: 5px;
-}
-
-#type_head {
-    font-family: 'DM Serif Display', serif;
-    font-size: 7em;
-    color: #152238;
-    text-transform: capitalize;
-    text-align: left;
-    width: 100%;
-    padding-top: 10px;
-    margin: 0 auto;
-    margin-bottom: -20px;
-}
-
-#dek {
-    font-family: 'DM Serif Display', serif;
-    text-transform: capitalize;
-    font-size: 1.8em;
-    color: black;
-    text-align: left;
-    margin: 0 auto;
-    margin-left: 0;
-    padding-bottom: 5px;
-}
-
-#type_dek {
-    font-family: 'DM Serif Display', serif;
-    font-size: 2em;
-    color: black;
-    text-align: left;
-    margin: 0 auto;
-    margin-left: 0;
-    padding-bottom: 20px;
-}
-
-#credit {
-    font-size: 10px;
-    color: rgb(146, 146, 146);
-    text-align: right;
-}
-#story {
-    font-family: "Hind Silliguri", sans-serif;
-    width: 100%;
-    font-size: 30px;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-left: 0px;
-}
-
-#story_offset {
-    font-family: "Hind Silliguri", sans-serif;
-    width: 100%;
-    font-size: 30px;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-left: -12px;
-}
-
-#search {
-    font-family: "Hind Silliguri", sans-serif;
-    width: 100%;
-    font-size: 30px;
-    color: #152238;
-    font-weight: 800;
-    max-width: 800px;
-    margin: 0 auto;
-    margin-left: 0px;
-}
-
-#byline {
-    font-family: 'Arvo', 'Garamond', serif;
-    font-size: 20px;
-    color: #4090b0;
-    text-align: left;
-    margin-top: 20px;
-}
-
-#date {
-    font-family: 'Arvo', 'Garamond', serif;
-    font-size: 15px;
-    color: black;
-    text-align: left;
-    margin-bottom: 10px;
-    color: #4090b0;
-    padding-bottom: 5px;
-    border-bottom: 3px solid black;
-}
-
-p {
-    margin-bottom: 10px;
-    font-family: 'Roboto', 'Arial', sans-serif;
-    font-size: 18px;
-}
-.firstlet {
-    font-family: 'Arvo', 'Garamond', serif;
-    font-size: 40px;
-    font-style: normal;
-}
-
-.sechead {
-    font-family: 'Arvo', 'Garamond', serif;
-    text-align: left;
-    font-size: 30px;
-    color: #4090b0;
-    margin-top: 20px;
-}
-
-figcaption {
-    font-family: 'Roboto','sans-serif';
-    font-size: 11px;
-    color: rgb(172, 172, 172);
-}
-/*Image setup in site*/
-.photog {
-    width: 100%;
-}
-
-#sidepho {
-    width: 385px;
-}
-
-blockquote {
-    font-size: 30px;
-    font-family: 'Arvo', 'Garamond', serif;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin: 0 auto;
-    text-align: center;
-    border-top: 5px solid;
-    border-color: #4090b0;
-    border-bottom: 5px solid;
-    color: #4090b0;
-}
-
-#readmore {
-    margin-top: -90px;
-}
-
-.headers {
-    font-family: 'Roboto', 'Arial', sans-serif;
-    font-size: 18px;
-}
-
-a {
-    color: black;
-}
-
-@media only screen and (min-width: 1530px){
-    #headline {
-        font-size: 4.5em;
-    }
-    #dek {
-        font-size: 2em;
-    }
-}
-
-@media only screen and (max-width: 1205px){
-    #headline {
-        font-size: 3.5em;
-    }
-    #dek {
-        font-size: 1.5em;
-    }
-    .bgimage {
-        max-height: 500px;
-    }
-}
-
-@media only screen and (max-width: 770px){
-    #headline {
-        font-size: 3em;
-    }
-    #dek {
-        font-size: 1.3em;
-    }
-    #sidepho{
-        width: 100%
-    }
-}
-
-@media only screen and (max-width: 520px){
-    #headline {
-        font-size: 2.5em;
-    }
-    #dek {
-        font-size: 1.1em;
-    }
-}
-
-@media only screen and (max-width: 440px){
-    #headline {
-        font-size: 2em;
-    }
-    #dek {
-        font-size: 1em;
-    }
-    .bgimage {
-        min-height: 0;
-        max-height: 400px;
-    }
-}
-
-@media only screen and (max-width: 400px){
-    #headline {
-        font-size: 1.8em;
-    }
-    #dek {
-        font-size: 0.9em;
-    }
-    .bgimage {
-        min-height: 0;
-        max-height: 400px;
-    }
+.bg-warm {
+    background-color: #F5F0E8;
 }
